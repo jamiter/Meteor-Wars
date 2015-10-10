@@ -47,6 +47,10 @@ class Round extends Model
     Turns.findOne @currentTurnId
 
   nextTurn: ->
+    # This can only be done server side
+    if Meteor.isClient
+      return Meteor.call 'nextTurn', @_id
+
     @_checkFinished()
 
     if not @_checkWin()
@@ -125,7 +129,7 @@ class Round extends Model
       throw new Meteor.Error "CANT_JOIN"
       return
 
-    defaultPlayerData =
+    defaultData =
       roundId: @_id
       gameId: @gameId
 
@@ -141,9 +145,19 @@ class Round extends Model
 
     data.rank = Math.ceil lastRank + 1
 
-    newData = _.extend {}, data, defaultPlayerData
+    mergedData = _.extend {}, data, defaultData
 
-    Players.insert newData
+    Players.insert mergedData
+
+  addUnit: (data = {}) ->
+    defaultData =
+      roundId: @_id
+      gameId: @gameId
+      playerId: @getCurrentPlayer()?._id
+
+    mergedData = _.extend {}, data, defaultData
+
+    Units.insert mergedData
 
   start: ->
     round = this
@@ -197,3 +211,15 @@ class Round extends Model
 
   countUnits: (options) ->
     @findUnits(options).count()
+
+Meteor.methods
+  'nextTurn': (roundId) ->
+    return if Meteor.isClient
+    return unless roundId
+    return unless @userId
+
+    return unless round = Rounds.findOne roundId
+    return unless player = round.findPlayer userId: @userId
+    return unless player._id is round.getCurrentPlayer()._id
+
+    round.nextTurn()

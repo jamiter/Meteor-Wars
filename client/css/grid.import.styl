@@ -1,0 +1,35 @@
+gridSize = 50
+
+.map
+  position relative
+
+  .unit
+    position absolute
+    width 30px
+    height 30px
+    background red
+    border-radius 30px
+    margin 10px
+    transition all .2s
+
+    &.object
+      background black
+
+    &.selected
+      border 1px solid blue
+
+    &.moved
+      opacity 0.5
+
+.grid-item
+  display: block
+  float: left
+  width (gridSize)px
+  height (gridSize)px
+  border 1px solid #aaa
+
+  &[data-x="0"]
+    clear both
+
+  &.path
+    background-color green

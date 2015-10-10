@@ -30,3 +30,9 @@ matb33:collection-hooks
 momentjs:moment
 aldeed:collection2
 materialize:materialize@=0.97.0
+
+
+npm-container
+pathfinding
+reactive-var
+reactive-dict

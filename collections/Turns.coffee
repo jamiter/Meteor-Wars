@@ -15,6 +15,12 @@ class Turn extends Model
       player.aiPlay()
 
   finish: ->
+    Units.update
+      playerId: @playerId
+    ,
+      $unset:
+        hasMoved: 1
+
     @update $set: finishedAt: new Date
 
   findPlayer: ->
