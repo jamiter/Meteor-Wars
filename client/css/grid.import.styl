@@ -16,10 +16,19 @@ gridSize = 50
       background black
 
     &.selected
-      border 1px solid blue
+      border 2px solid blue
+
+    &.targeted
+      border 2px solid orange
 
     &.moved
       opacity 0.5
+
+    .unit-menu
+      background white
+      width 100px
+      li
+        padding .5rem .5rem
 
 .grid-item
   display: block

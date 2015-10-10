@@ -86,7 +86,6 @@ Template.GameTable.events
 
     return unless unit
 
-    Session.set 'selectedUnitId', null
     unit.set hasMoved: true
 
     createWaitPromite = (i) ->
