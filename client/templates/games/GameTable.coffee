@@ -1,14 +1,16 @@
 finder = new PF.AStarFinder(allowDiagonal: false)
 grid = new PF.Grid(10,10)
 
+findRound = ->
+  roundId = FlowRouter.getParam 'roundId'
+  round = Rounds.findOne roundId
+
 Template.GameTable.onCreated ->
   @path = new ReactiveVar []
 
 Template.GameTable.helpers
   round: ->
-    roundId = FlowRouter.getParam 'roundId'
-
-    Rounds.findOne roundId
+    findRound()
 
   players: ->
     roundId = FlowRouter.getParam 'roundId'
@@ -21,11 +23,7 @@ Template.GameTable.helpers
     Units.find roundId: roundId
 
   hasFinished: ->
-    roundId = FlowRouter.getParam 'roundId'
-
-    round = Rounds.findOne roundId
-
-    round?.hasFinished()
+    findRound()?.hasFinished()
 
   grid: ->
     grid.nodes
@@ -39,6 +37,9 @@ Template.GameTable.helpers
     for point in path
       if (@x is point[0]) and (@y is point[1])
         return 'path'
+
+  isCurrentPlayer: ->
+    @getCurrentPlayer().userId is Meteor.userId()
 
 Template.GameTable.events
   'click .add-unit': ->
@@ -57,6 +58,7 @@ Template.GameTable.events
 
     return unless unit
     return if unit.hasMoved
+    return unless findRound().getCurrentPlayer().userId is Meteor.userId()
 
     units = Units.find
       roundId: roundId
@@ -76,34 +78,12 @@ Template.GameTable.events
 
   'click .grid-item': ->
     return unless unitId = Session.get 'selectedUnitId'
-
-    path = Template.instance().path
-    points = path.get()
-
-    return unless points.length > 1
+    return unless findRound().getCurrentPlayer().userId is Meteor.userId()
 
     unit = Units.findOne unitId
 
     return unless unit
 
-    unit.set hasMoved: true
+    path = Template.instance().path
 
-    createWaitPromite = (i) ->
-      point = points[i]
-
-      if not point
-        new Promise (resolve, reject) -> resolve()
-      else
-        new Promise (resolve, reject) ->
-          timeout = if i is 0 then 0 else 200
-
-          Meteor.setTimeout ->
-            unit.set
-              x: point[0]
-              y: point[1]
-
-            createWaitPromite(i+1).then resolve
-          , timeout
-
-    createWaitPromite(0).then ->
-      path.set([])
+    unit.moveAlongPath(path.get())?.then -> path.set([])

@@ -1,7 +1,8 @@
 .container
   with round
     .btn.add-unit Add unit
-    .btn.next-turn Next turn
+    if isCurrentPlayer
+      .btn.next-turn Next turn
   .map
     each grid
       each this

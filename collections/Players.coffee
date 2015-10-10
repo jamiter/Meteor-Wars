@@ -19,3 +19,9 @@ class Player extends Model
 
   isCurrentPlayer: ->
     @_id is @findRound()?.getCurrentPlayer()?._id
+
+  getTeamColor: ->
+    if @rank is 1
+      "#072"
+    else
+      "#720"

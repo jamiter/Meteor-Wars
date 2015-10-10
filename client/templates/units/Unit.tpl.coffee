@@ -5,7 +5,8 @@ targetedUnitIdName = 'targetedUnitId'
 Template.Unit.helpers
   unitStyle: ->
     "left: #{@x * gridItemSize}px;
-    top: #{@y * gridItemSize}px;"
+    top: #{@y * gridItemSize}px;
+    transform: rotate(#{@angle or 0}deg);"
 
   className: ->
     classes = [@type]
@@ -27,12 +28,16 @@ Template.Unit.helpers
   canAttack: ->
     @findTargets()?.count()
 
+  strokeTeamColor: ->
+    tinycolor(@getTeamColor()).darken(30).toString()
+
 Template.Unit.events
   'click .unit': ->
     if @_id isnt Session.get targetedUnitIdName
       Session.set selectedUnitIdName, @_id
-    else
-      @remove()
+      Session.set targetedUnitIdName, null
+    else if attacker = Units.findOne Session.get selectedUnitIdName
+      attacker.attack this
 
   'mouseover .unit': ->
     return unless selectedUnitId = Session.get selectedUnitIdName

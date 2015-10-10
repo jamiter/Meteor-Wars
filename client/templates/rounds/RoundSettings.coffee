@@ -1,5 +1,3 @@
-
-
 Template.RoundSettings.helpers
   map: ->
     gameId = FlowRouter.getParam 'gameId'

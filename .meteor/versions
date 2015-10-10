@@ -86,6 +86,7 @@ standard-minifiers@1.0.1
 stylus@2.511.0_2
 templating@1.1.4
 templating-tools@1.0.0
+tinycolor2@1.1.2
 tracker@1.0.9
 ui@1.0.8
 underscore@1.0.4

@@ -31,9 +31,8 @@ momentjs:moment
 aldeed:collection2
 materialize:materialize@=0.97.0
 
-
-npm-container
 pathfinding
+tinycolor2
 reactive-var
 reactive-dict
 meteorwars:standardgame
