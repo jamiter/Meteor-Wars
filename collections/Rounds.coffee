@@ -89,6 +89,8 @@ class Round extends Model
   getNextPlayer: ->
     @_checkFinished()
 
+    @dir ?= 1
+
     queryOptions = sort: rank: @dir
 
     findFirst = =>
@@ -219,7 +221,7 @@ Meteor.methods
     return unless @userId
 
     return unless round = Rounds.findOne roundId
-    return unless player = round.findPlayer userId: @userId
+    return unless player = Players.findOne userId: @userId, roundId: roundId
     return unless player._id is round.getCurrentPlayer()._id
 
     round.nextTurn()

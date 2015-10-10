@@ -20,6 +20,8 @@ class Turn extends Model
     ,
       $unset:
         hasMoved: 1
+    ,
+      multi: true
 
     @update $set: finishedAt: new Date
 
