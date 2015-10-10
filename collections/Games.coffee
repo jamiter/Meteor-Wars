@@ -15,27 +15,24 @@ GameSchema = new SimpleSchema
     autoValue: ->
       if @isInsert or @isUpdate
         new Date
-  createdBy:
-    type: String
-  updatedBy:
-    type: String
-  # startedAt:
-  #   type: Date
-  #   optional: true
-  # finishedAt:
-  #   type: Date
-  #   optional: true
   name:
     type: String
+  playersRequirement:
+    type: Number
+  'maps':
+    type: [Object]
+    minCount: 1
+    blackbox: true
+  gameObjects:
+    type: Object
+    blackbox: true
+
+
+
 
 Games.attachSchema GameSchema
 
-Games.before.insert (userId, doc) ->
-  doc.createdBy ?= userId
-  doc.updatedBy ?= userId
 
-Games.before.update (userId, doc) ->
-  doc.updatedBy = userId
 
 class Game extends Model
 

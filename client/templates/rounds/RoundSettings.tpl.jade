@@ -1,4 +1,4 @@
-h2 Round settings
+h2 Game settings
 
 with round
   h4 Players
@@ -7,7 +7,9 @@ with round
     if canJoin
       button.btn.join-game Join game
     if canStart
-      button.btn.start-game Start the game
+      each map
+        p
+          button.btn.start-game Start a {{name}} map game
     else
       if countPlayers
         p Waiting for #{hostName} to start the game...
