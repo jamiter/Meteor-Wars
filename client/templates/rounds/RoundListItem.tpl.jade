@@ -1,0 +1,7 @@
+a.round.collection-item(href="/games/{{gameId}}/rounds/{{_id}}")
+  span= name
+  if hasStarted
+    if hasFinished
+      span  (finished)
+    else
+      span  (started)

@@ -1,0 +1,7 @@
+.container
+  +loginButtons
+  
+  if currentUser
+    +Template.dynamic template=main
+  else
+    p Please login first

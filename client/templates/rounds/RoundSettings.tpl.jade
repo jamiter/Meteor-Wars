@@ -1,0 +1,15 @@
+h2 Round settings
+
+with round
+  h4 Players
+  +PlayerList players=findPlayers
+  unless hasStarted
+    if canJoin
+      button.btn.join-game Join game
+    if canStart
+      button.btn.start-game Start the game
+    else
+      if countPlayers
+        p Waiting for #{hostName} to start the game...
+  else
+    button.btn.go-to-game Go to game
