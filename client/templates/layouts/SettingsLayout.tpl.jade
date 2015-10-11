@@ -1,5 +1,12 @@
+nav.green.darken-4
+  .nav-wrapper
+    a.brand-logo.center(href='/') Meteor Wars
+    ul#nav-mobile.left.hide-on-med-and-down
+      li
+        +loginButtons
+
+
 .container
-  +loginButtons
   
   if currentUser
     +Template.dynamic template=main
