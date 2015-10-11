@@ -2,4 +2,4 @@
   .image(style=imageStyle)
     +Template.dynamic(template=unitTemplate data=unitData)
   unless atMaxStrength
-    .strength= getStrength
+    .strength #{getStrength}/#{maxStrength}

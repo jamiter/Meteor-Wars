@@ -6,7 +6,12 @@ Package.describe({
   documentation: 'README.md'
 });
 
+var objectFiles = [
+  'objects/ObjectForest.html'
+];
+
 var unitFiles = [
+  'units/UnitJeep.html',
   'units/UnitRifleman.html',
   'units/UnitTank.html',
   'units/UnitBazooka.html',
@@ -17,6 +22,7 @@ Package.onUse(function(api) {
   api.use('ecmascript');
   api.use('blaze-html-templates');
 
+  api.addFiles(objectFiles, 'client');
   api.addFiles(unitFiles, 'client');
 
   api.addFiles('standardgame.js', 'server');

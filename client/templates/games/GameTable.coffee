@@ -13,12 +13,16 @@ Template.GameTable.onCreated ->
 
     @grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
 
+  @autorun =>
+    if not Session.get 'selectedUnitId'
+      @path.set []
+
 Template.GameTable.helpers
   mapStyle: ->
     grid = Template.instance().grid
 
     "width: #{grid.width * gridTileSize}px;
-    height: #{grid.heigth * gridTileSize}px"
+    height: #{grid.height * gridTileSize}px"
 
   round: ->
     findRound()
@@ -32,6 +36,11 @@ Template.GameTable.helpers
     roundId = FlowRouter.getParam 'roundId'
 
     Units.find roundId: roundId
+
+  immutables: ->
+    roundId = FlowRouter.getParam 'roundId'
+
+    Immutables.find roundId: roundId
 
   hasFinished: ->
     findRound()?.hasFinished()

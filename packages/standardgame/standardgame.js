@@ -65,16 +65,16 @@ Meteor.startup(function () {
     var immutableObjectType = {
         tree: {
             name: "Bonsai Tree",
-            type: "Unmovable",
-            templateName: "StructTree",
+            type: "unmovable",
+            templateName: "ObjectForest",
             walkable: true,
             cover: true,
             maxHealth: 150
         },
         city: {
             name: "Gotham",
-            type: "Unmovable",
-            templateName: "StructTree",
+            type: "unmovable",
+            templateName: "ObjectForest",
             walkable: true,
             cover: true,
             maxHealth: 300

@@ -4,6 +4,9 @@ if hasFinished
 else
   .map-container
     .map(style=mapStyle)
+      each immutables
+        +Immutable
+      
       each grid
         each this
           .grid-item(class=gridClass, data-x=x, data-y=y)
