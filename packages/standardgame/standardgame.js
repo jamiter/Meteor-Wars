@@ -79,19 +79,70 @@ Meteor.startup(function () {
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 0,
                     x: 2,
-                    y: 3
+                    y: 15
                 },
                 {
                     unitObjectType: unitObjectType.tank,
-                    playerIndex: 1,
-                    x: 17,
+                    playerIndex: 0,
+                    x: 3,
+                    y: 17
+                },
+                {
+                    gameObjectType: unitObjectType.bazookaSoldier,
+                    playerIndex: 0,
+                    x: 6,
+                    y: 7
+                },{
+                    unitObjectType: unitObjectType.soldier,
+                    playerIndex: 0,
+                    x: 9,
+                    y: 12
+                },
+                {
+                    unitObjectType: unitObjectType.tank,
+                    playerIndex: 0,
+                    x: 4,
                     y: 3
                 },
                 {
                     gameObjectType: unitObjectType.bazookaSoldier,
                     playerIndex: 0,
+                    x: 1,
+                    y: 16
+                },{
+                    unitObjectType: unitObjectType.soldier,
+                    playerIndex: 1,
+                    x: 13,
+                    y: 16
+                },
+                {
+                    unitObjectType: unitObjectType.tank,
+                    playerIndex: 1,
                     x: 18,
-                    y: 3
+                    y: 5
+                },
+                {
+                    gameObjectType: unitObjectType.bazookaSoldier,
+                    playerIndex: 1,
+                    x: 16,
+                    y: 17
+                },{
+                    unitObjectType: unitObjectType.soldier,
+                    playerIndex: 1,
+                    x: 11,
+                    y: 18
+                },
+                {
+                    unitObjectType: unitObjectType.tank,
+                    playerIndex: 1,
+                    x: 13,
+                    y: 18
+                },
+                {
+                    gameObjectType: unitObjectType.bazookaSoldier,
+                    playerIndex: 1,
+                    x: 17,
+                    y: 6
                 }]
         }
     ];
