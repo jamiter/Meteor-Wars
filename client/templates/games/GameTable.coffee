@@ -106,4 +106,4 @@ Template.GameTable.events
 
     path = Template.instance().path
 
-    unit.moveAlongPath(path.get())?.then -> path.set([])
+    unit?.moveAlongPath(path.get())?.then -> path.set([])

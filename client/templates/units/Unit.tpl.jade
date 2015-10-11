@@ -1,5 +1,10 @@
 .unit(class=className, style=unitStyle)
   .image(style=imageStyle)
     +Template.dynamic(template=unitTemplate data=unitData)
+  .corner-icons
+    if attacked
+      i.fa.fa-crosshairs
+    if moved
+      i.fa.fa-lock
   unless atMaxStrength
     .strength #{getStrength}/#{maxStrength}

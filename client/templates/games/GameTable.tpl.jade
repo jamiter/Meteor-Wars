@@ -2,6 +2,28 @@ if hasFinished
   with round
     +RoundScoreboard
 else
+  .navbar-fixed
+    nav
+      .nav-wrapper
+        .container
+          a.brand-logo.center(href='/') Meteor Wars
+          ul.left
+            li
+              +loginButtons
+          with round
+            if isCurrentPlayer
+              ul.right
+                li
+                  a You are playing!
+                li
+                  .btn.next-turn
+                    .fa.fa-check
+                    span I'm done!
+            else
+              with getCurrentPlayer
+                ul.right
+                  li #{name} is playing
+              
   .map-container
     .map(style=mapStyle)
       each immutables
@@ -14,8 +36,3 @@ else
             
       each units
         +Unit
-
-  .container
-    with round
-      if isCurrentPlayer
-        .btn.next-turn Next turn

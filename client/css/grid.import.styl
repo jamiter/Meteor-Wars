@@ -16,7 +16,7 @@ gridSize = 80
 
 .map
   position relative
-  margin 1em auto 2em
+  margin 0 auto 2em
   background #B3D72F
   &:after
     content ''
@@ -54,9 +54,6 @@ gridSize = 80
       border-color red
       cursor crosshair
 
-    &.moved
-      opacity 0.6
-
     .strength
       position absolute
       right 3px
@@ -69,6 +66,15 @@ gridSize = 80
       padding 0 1px
       font-size 10px
       background rgba(255,255,255,0.8)
+
+    .corner-icons
+      position absolute
+      top 1px
+      right 5px
+      color red
+      text-shadow 1px 1px 0 rgba(0,0,0,0.8), -1px -1px 0 rgba(0,0,0,0.8), -1px 1px 0 rgba(0,0,0,0.8), 1px -1px 0 rgba(0,0,0,0.8)
+      .fa
+        display inline-block
 
 .grid-item
   z-index 5

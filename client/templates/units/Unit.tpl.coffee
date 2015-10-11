@@ -29,8 +29,6 @@ Template.Unit.helpers
     if @canDoAction() and not @canMove()
       classes.push 'moved'
 
-    # if @player().userId
-
     classes.join ' '
 
   selected: ->

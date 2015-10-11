@@ -37,6 +37,10 @@ UnitSchema = new SimpleSchema
     type: Boolean
     optional: true
 
+@Units.after.remove (userId, doc) ->
+  unit = new Unit doc
+  unit.findRound()?._checkWin()
+
 # Units.attachSchema UnitSchema
 
 class Unit extends Model
