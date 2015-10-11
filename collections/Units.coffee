@@ -57,9 +57,9 @@ class Unit extends Model
     @getMaxStrength() is @getStrength()
 
   getDamage: (unit) ->
-    @basicDamage ?= 30
+    return 0 if not dmg = @damage?[unit.type]
 
-    Math.ceil @getStrengthDamageModifier() * (@basicDamage + (Math.random() * 20))
+    Math.ceil @getStrengthDamageModifier() * (dmg + (0.8 + Math.random() * 0.4))
 
   getStrength: ->
     health = @getHealth()
@@ -112,6 +112,7 @@ class Unit extends Model
   canTarget: (unit = {}) ->
     return false if not @canAttack()
     return false if unit.playerId is @playerId
+    return false if not @getDamage unit
 
     (unit.x is @x and unit.y >= @y-1 and unit.y <= @y+1) or
     (unit.y is @y and unit.x >= @x-1 and unit.x <= @x+1)
