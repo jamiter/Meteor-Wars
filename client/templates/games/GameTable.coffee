@@ -1,14 +1,23 @@
 finder = new PF.AStarFinder(allowDiagonal: false)
-grid = new PF.Grid(10,10)
+gridTileSize = 42
+gridXSize = 25
+gridYSize = 20
+grid = new PF.Grid(gridXSize,gridYSize)
+
+findRound = ->
+  roundId = FlowRouter.getParam 'roundId'
+  round = Rounds.findOne roundId
 
 Template.GameTable.onCreated ->
   @path = new ReactiveVar []
 
 Template.GameTable.helpers
-  round: ->
-    roundId = FlowRouter.getParam 'roundId'
+  mapStyle: ->
+    "width: #{gridXSize * gridTileSize}px;
+    height: #{gridYSize * gridTileSize}px"
 
-    Rounds.findOne roundId
+  round: ->
+    findRound()
 
   players: ->
     roundId = FlowRouter.getParam 'roundId'
@@ -21,11 +30,7 @@ Template.GameTable.helpers
     Units.find roundId: roundId
 
   hasFinished: ->
-    roundId = FlowRouter.getParam 'roundId'
-
-    round = Rounds.findOne roundId
-
-    round?.hasFinished()
+    findRound()?.hasFinished()
 
   grid: ->
     grid.nodes
@@ -40,11 +45,19 @@ Template.GameTable.helpers
       if (@x is point[0]) and (@y is point[1])
         return 'path'
 
+  isCurrentPlayer: ->
+    @getCurrentPlayer().userId is Meteor.userId()
+
 Template.GameTable.events
   'click .add-unit': ->
-    @addUnit
-      x: 0
-      y: 0
+    x = Math.floor Math.random() * gridXSize
+    y = Math.floor Math.random() * gridYSize
+
+    if not Units.findOne(x: x, y: y)
+      @addUnit
+        x: x
+        y: y
+        angle: Math.floor Math.random() * 360
 
   'click .next-turn': ->
     @nextTurn()
@@ -55,8 +68,7 @@ Template.GameTable.events
 
     unit = Units.findOne unitId
 
-    return unless unit
-    return if unit.hasMoved
+    return unless unit?.canMove()
 
     units = Units.find
       roundId: roundId
@@ -69,7 +81,7 @@ Template.GameTable.events
 
     path = finder.findPath (unit.x or 0), (unit.y or 0), @x, @y, walkGrid
 
-    if path.length > unit.move_range
+    if path.length > (unit.move_range or 5)
       Template.instance().path.set []
     else
       Template.instance().path.set path
@@ -77,34 +89,8 @@ Template.GameTable.events
   'click .grid-item': ->
     return unless unitId = Session.get 'selectedUnitId'
 
-    path = Template.instance().path
-    points = path.get()
-
-    return unless points.length > 1
-
     unit = Units.findOne unitId
 
-    return unless unit
+    path = Template.instance().path
 
-    Session.set 'selectedUnitId', null
-    unit.set hasMoved: true
-
-    createWaitPromite = (i) ->
-      point = points[i]
-
-      if not point
-        new Promise (resolve, reject) -> resolve()
-      else
-        new Promise (resolve, reject) ->
-          timeout = if i is 0 then 0 else 200
-
-          Meteor.setTimeout ->
-            unit.set
-              x: point[0]
-              y: point[1]
-
-            createWaitPromite(i+1).then resolve
-          , timeout
-
-    createWaitPromite(0).then ->
-      path.set([])
+    unit.moveAlongPath(path.get())?.then -> path.set([])

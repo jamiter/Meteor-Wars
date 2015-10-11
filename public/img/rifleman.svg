@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>rifleman</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <path d="M16.1719577,9.94318306 C16.9151605,9.92902546 16.6595064,11.9513193 16.6595064,12.6038276 C16.6595066,15.7568977 10.0738128,15.3655463 10.6109221,17.9277888 C11.0732386,20.1332369 19.2665465,17.1894227 20.7643929,16.0943803 C22.2622394,14.9993379 22.7034702,16.39822 22.7034702,16.39822 C23.4000483,17.2429774 23.9647364,18.82501 23.9647364,19.9238373 L23.9647364,22.5845042 C23.9647364,23.6868914 23.1172814,24.8988686 22.0760105,25.2504303 C22.0760105,25.2504303 10.278891,30.1873235 6.76692825,23.1394718 C3.69399085,16.9726619 10.9699457,10.0422785 16.1719577,9.94318306 Z" id="Body" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup"></path>
+        <circle id="Left-Hand" stroke="#98837D" fill="#F8D6CD" sketch:type="MSShapeGroup" cx="17.8369966" cy="12.0972358" r="1.5"></circle>
+        <circle id="Right-Hand" stroke="#98837D" fill="#F8D6CD" sketch:type="MSShapeGroup" cx="20.8369966" cy="15.0972358" r="1.5"></circle>
+        <rect id="Rifle" stroke="#5C432C" fill="#A57A53" sketch:type="MSShapeGroup" x="18.3119721" y="4.59723579" width="3" height="15.9916585"></rect>
+        <path d="M19.8369966,9.09723579 L19.8369966,3.09723579" id="Line" stroke="#444444" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+        <path d="M14.3203136,27.4027642 C17.6248084,27.4027642 20.3036307,24.5000843 20.3036307,20.9194472 C20.3036307,17.33881 17.6248084,14.4361301 14.3203136,14.4361301 C11.0158188,14.4361301 8.33699655,17.33881 8.33699655,20.9194472 C8.33699655,24.5000843 11.0158188,27.4027642 14.3203136,27.4027642 Z" id="Helmet" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup"></path>
+        <path d="M11.8369966,17.0972358 C11.8369966,17.0972358 13.0869966,16.1362983 14.3369966,16.1362983 C15.5869966,16.1362983 16.8369966,17.0972358 16.8369966,17.0972358" id="Line" stroke="#979797" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+    </g>
+</svg>

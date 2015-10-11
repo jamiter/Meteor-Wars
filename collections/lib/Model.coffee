@@ -5,8 +5,12 @@ class @Model
   update: (options) ->
     @constructor._collection?.update _id: @_id, options
 
-  set: (options) ->
-    @update $set: options
+  set: (data) ->
+    # Hard override this object so it is imediantly up to date
+    for key, value of data
+      @[key] = value
+
+    @update $set: data
 
   remove: (options) ->
     @constructor._collection?.remove _id: @_id, options
