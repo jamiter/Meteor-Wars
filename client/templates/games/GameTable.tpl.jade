@@ -10,20 +10,21 @@ else
           ul.left
             li
               +loginButtons
-          with round
-            if isCurrentPlayer
-              ul.right
-                li
-                  a You are playing!
-                li
-                  .btn.next-turn
-                    .fa.fa-check
-                    span I'm done!
-            else
-              with getCurrentPlayer
+          if Template.subscriptionsReady
+            with round
+              if isCurrentPlayer
                 ul.right
-                  li #{name} is playing
-                  
+                  li
+                    a You are playing!
+                  li
+                    .btn.next-turn
+                      .fa.fa-check
+                      span I'm done!
+              else
+                with getCurrentPlayer
+                  ul.right
+                    li #{name} is playing
+                    
   
   .map-container
     unless Template.subscriptionsReady

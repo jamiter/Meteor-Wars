@@ -26,6 +26,7 @@ Template.GameTable.onCreated ->
     @subscribe 'players', roundId: roundId
     @subscribe 'units', roundId: roundId
     @subscribe 'immutables', roundId: roundId
+    @subscribe 'turns', roundId: roundId
 
 Template.GameTable.helpers
   mapStyle: ->
@@ -38,17 +39,17 @@ Template.GameTable.helpers
     findRound()
 
   players: ->
-    roundId = FlowRouter.getParam 'roundId'
+    return unless roundId = FlowRouter.getParam 'roundId'
 
     Players.find roundId: roundId
 
   units: ->
-    roundId = FlowRouter.getParam 'roundId'
+    return unless roundId = FlowRouter.getParam 'roundId'
 
     Units.find roundId: roundId
 
   immutables: ->
-    roundId = FlowRouter.getParam 'roundId'
+    return unless roundId = FlowRouter.getParam 'roundId'
 
     Immutables.find roundId: roundId
 

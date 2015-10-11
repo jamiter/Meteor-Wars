@@ -177,7 +177,6 @@ class Round extends Model
     if not @canStart()
       throw new Meteor.Error "NO_PLAYERS_YET"
     else
-      # TODO: Load GameMap with units
       # TODO: randomize player rank
 
       # aiPlayerCount = @constructor.MINIMUM_PLAYERS - @countPlayers()
@@ -239,6 +238,6 @@ Meteor.methods
 
     return unless round = Rounds.findOne roundId
     return unless player = Players.findOne userId: @userId, roundId: roundId
-    return unless player._id is round.getCurrentPlayer()._id
+    return if player._id isnt round.getCurrentPlayer()._id
 
     round.nextTurn()
