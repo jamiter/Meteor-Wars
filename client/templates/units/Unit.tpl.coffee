@@ -42,15 +42,14 @@ Template.Unit.helpers
 
 Template.Unit.events
   'click .unit': ->
-    if @findRound()?.getCurrentPlayer()._id isnt @playerId
-      Session.set selectedUnitIdName, null
-      return
-
     if @_id isnt Session.get targetedUnitIdName
       if @_id is Session.get selectedUnitIdName
         Session.set selectedUnitIdName, null
       else
-        Session.set selectedUnitIdName, @_id
+        if @findRound()?.getCurrentPlayer()._id isnt @playerId
+          Session.set selectedUnitIdName, null
+        else
+          Session.set selectedUnitIdName, @_id
 
       Session.set targetedUnitIdName, null
     else if attacker = Units.findOne Session.get selectedUnitIdName
