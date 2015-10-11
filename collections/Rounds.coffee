@@ -76,12 +76,17 @@ class Round extends Model
     if not current
       false
     else
-      # TODO: check if players have any units left
+      playerIds = @findUnits().fetch().reduce (playerIds, unit) ->
+        if unit.playerId not in playerIds
+          playerIds.push unit.playerId
 
-      finished = false
+        playerIds
+      , []
+
+      finished = playerIds.length is 1
 
       if finished
-        @update $set: winnerId: current._id
+        @update $set: winnerId: playerIds[0]
         @finish()
 
       finished
