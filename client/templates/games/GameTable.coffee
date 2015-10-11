@@ -9,13 +9,23 @@ Template.GameTable.onCreated ->
   @path = new ReactiveVar []
 
   @autorun =>
-    round = findRound()
-
-    @grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
+    if round = findRound()
+      @grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
 
   @autorun =>
     if not Session.get 'selectedUnitId'
       @path.set []
+
+  @autorun =>
+    return unless Meteor.userId()
+    return unless gameId = FlowRouter.getParam('gameId')
+    return unless roundId = FlowRouter.getParam('roundId')
+
+    @subscribe 'games', _id: gameId
+    @subscribe 'rounds', _id: roundId
+    @subscribe 'players', roundId: roundId
+    @subscribe 'units', roundId: roundId
+    @subscribe 'immutables', roundId: roundId
 
 Template.GameTable.helpers
   mapStyle: ->

@@ -2,4 +2,7 @@ unless currentUser
   p Please login first
 
 if currentUser
-  +Template.dynamic template=main
+  if Template.subscriptionsReady 
+    +Template.dynamic template=main
+  else
+    p Loading...

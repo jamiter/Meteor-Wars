@@ -23,16 +23,20 @@ else
               with getCurrentPlayer
                 ul.right
                   li #{name} is playing
-              
+                  
+  
   .map-container
-    .map(style=mapStyle)
-      each immutables
-        +Immutable
-      
-      each grid
-        each this
-          .grid-item(class=gridClass, data-x=x, data-y=y)
-            .overlay
-            
-      each units
-        +Unit
+    unless Template.subscriptionsReady
+      +Loader
+    else
+      .map(style=mapStyle)
+        each immutables
+          +Immutable
+        
+        each grid
+          each this
+            .grid-item(class=gridClass, data-x=x, data-y=y)
+              .overlay
+              
+        each units
+          +Unit

@@ -8,8 +8,11 @@ nav.green.darken-4
 
 
 .container
-  
   if currentUser
     +Template.dynamic template=main
+    
+    unless Template.subscriptionsReady
+      +Loader
+      
   else
     p Please login first
