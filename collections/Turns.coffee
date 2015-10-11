@@ -19,8 +19,8 @@ class Turn extends Model
       playerId: @playerId
     ,
       $unset:
-        hasMoved: 1
-        hasAttacked: 1
+        moved: 1
+        attacked: 1
     ,
       multi: true
 

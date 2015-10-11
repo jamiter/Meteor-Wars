@@ -107,15 +107,15 @@ class Unit extends Model
     (unit.y is @y and unit.x >= @x-1 and unit.x <= @x+1)
 
   canMove: ->
-    not @hasMoved and not @hasAttacked and @canDoAction()
+    not @moved and not @hasAttacked and @canDoAction()
 
   canAttack: ->
-    not @hasAttacked and @canDoAction()
+    not @attacked and @canDoAction()
 
   attack: (unit = {}) ->
     return unless @canTarget unit
 
-    @set hasAttacked: true
+    @set attacked: true
 
     unit.takeDamage @getDamage(unit)
 
@@ -172,4 +172,4 @@ class Unit extends Model
           , timeout
 
     createWaitPromite(0).then =>
-      @set hasMoved: true
+      @set moved: true
