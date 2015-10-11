@@ -10,6 +10,19 @@ Template.Unit.helpers
   imageStyle: ->
     "transform: rotate(#{@angle or 0}deg);"
 
+  unitTemplate: ->
+    switch @type
+      when 'armor'
+        'UnitTank'
+      when 'infantry'
+        'UnitRifleman'
+      else
+        'UnitRifleman'
+
+  unitData: ->
+    teamColor: @getTeamColor()
+    strokeTeamColor: tinycolor(@getTeamColor()).darken(30).toString()
+
   className: ->
     classes = [@type]
 
@@ -31,9 +44,6 @@ Template.Unit.helpers
 
   canAttack: ->
     @findTargets()?.count()
-
-  strokeTeamColor: ->
-    tinycolor(@getTeamColor()).darken(30).toString()
 
 Template.Unit.events
   'click .unit': ->

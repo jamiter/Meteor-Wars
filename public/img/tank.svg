@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>tank</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Tank" sketch:type="MSLayerGroup">
+            <rect id="Tank-tracks" stroke="#4E4E4E" sketch:type="MSShapeGroup" x="5" y="8" width="20" height="21"></rect>
+            <path d="M6,6.13636364 C6,6.13636364 12.1160889,5 15.1741333,5 C18.1160889,5 24,6.13636364 24,6.13636364 L24,30 L6,30 L6,6.13636364 Z" id="Tank-base" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup"></path>
+            <path d="M15,22.6402771 C17.6525923,22.6402771 19.8029432,20.9261867 19.8029432,17.4778167 C19.8029432,14.0294467 17.6525923,11.2339905 15,11.2339905 C12.3474077,11.2339905 10.1970568,14.0294467 10.1970568,17.4778167 C10.1970568,20.9261867 12.3474077,22.6402771 15,22.6402771 Z" id="Oval-4" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup"></path>
+            <rect id="Rectangle-4" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="14" y="0" width="2" height="11"></rect>
+            <circle id="Oval-5" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" cx="16" cy="18" r="2"></circle>
+            <path d="M9.5,24.5 L9.5,26.5065918 L20.5429688,26.5065918 L20.5429688,24.5" id="Line" stroke="#979797" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>
