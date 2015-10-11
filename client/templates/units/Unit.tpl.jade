@@ -1,5 +1,5 @@
 .unit(class=className, style=unitStyle)
   .image(style=imageStyle)
-    +Rifleman(teamColor=getTeamColor strokeTeamColor=strokeTeamColor)
+    +Template.dynamic(template=unitTemplate data=unitData)
   unless atMaxStrength
     .strength= getStrength
