@@ -53,8 +53,10 @@ class Unit extends Model
   getHealth: ->
     @health ?= 100
 
+  atMaxHealth: ->
+    @getHealth() >= @getMaxHealth()
+
   getMaxStrength: ->
-    # TODO: get this from the unit type
     @maxStrength or 10
 
   atMaxStrength: ->

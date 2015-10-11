@@ -37,8 +37,15 @@ Template.Unit.helpers
   canAttack: ->
     @findTargets()?.count()
 
+  healthBarWidth: ->
+    Math.ceil(@getStrengthDamageModifier() * 100)
+
 Template.Unit.events
   'click .unit': ->
+    if @findRound()?.getCurrentPlayer()._id isnt @playerId
+      Session.set selectedUnitIdName, null
+      return
+
     if @_id isnt Session.get targetedUnitIdName
       if @_id is Session.get selectedUnitIdName
         Session.set selectedUnitIdName, null
