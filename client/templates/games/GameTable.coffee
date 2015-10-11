@@ -85,7 +85,7 @@ Template.GameTable.events
 
     path = finder.findPath (unit.x or 0), (unit.y or 0), @x, @y, walkGrid
 
-    if path.length > (unit.move_range or 5)
+    if path.length > (unit.moverange or 5)
       Template.instance().path.set []
     else
       Template.instance().path.set path
