@@ -1,4 +1,5 @@
 gridSize = 80
+greenBgColor = #B3D72F
 
 @keyframes hangingout
   from, to
@@ -13,14 +14,13 @@ gridSize = 80
 .map-container
   overflow-x scroll
   overflow-y scroll
+  background darken(greenBgColor, 10%)
 
 .map
   position relative
-  margin 0 auto
-  background #B3D72F
-  &:after
-    content ''
-    clear both
+  margin 10px auto
+  background greenBgColor
+  border-radius 5px
 
   .unit
     z-index 10
