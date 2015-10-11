@@ -24,7 +24,7 @@ Meteor.startup(function () {
             maxStrength: 4,
             minShootingrange: 0,
             maxShootingrange: 5,
-            moverange: 8,
+            moverange: 6,
             damage: {
                 infantry: 70,
                 armor: 80,
@@ -54,7 +54,7 @@ Meteor.startup(function () {
             maxStrength: 8,
             minShootingrange: 0,
             maxShootingrange: 2,
-            moverange: 10,
+            moverange: 8,
             damage: {
                 infantry: 100,
                 armor: 20,
