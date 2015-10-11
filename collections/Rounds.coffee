@@ -143,7 +143,7 @@ class Round extends Model
     if not data.name
       data.name = Meteor.users
         .findOne data.userId
-        .emails?[0].address
+        .username
 
     lastPlayer = @findPlayer
       sort: rank: -1
