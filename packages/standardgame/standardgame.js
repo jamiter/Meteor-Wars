@@ -79,138 +79,162 @@ Meteor.startup(function () {
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 0,
                     x: 4,
-                    y: 15
+                    y: 15,
+                    angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 0,
                     x: 5,
-                    y: 17
+                    y: 17,
+                    angle: 90
                 },
                 {
                     gameObjectType: unitObjectType.bazookaSoldier,
                     playerIndex: 0,
                     x: 8,
-                    y: 7
+                    y: 7,
+                    angle: 90
                 },{
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 0,
                     x: 3,
-                    y: 12
+                    y: 12,
+                    angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 0,
                     x: 7,
-                    y: 3
+                    y: 3,
+                    angle: 90
                 },
                 {
                     gameObjectType: unitObjectType.bazookaSoldier,
                     playerIndex: 0,
                     x: 8,
-                    y: 16
+                    y: 16,
+                    angle: 90
                 },{
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 1,
                     x: 11,
-                    y: 16
+                    y: 16,
+                    angle: 270
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
                     x: 17,
-                    y: 5
+                    y: 5,
+                    angle: 270
                 },
                 {
                     gameObjectType: unitObjectType.bazookaSoldier,
                     playerIndex: 1,
                     x: 13,
-                    y: 17
+                    y: 17,
+                    angle: 270
                 },{
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 1,
                     x: 19,
-                    y: 18
+                    y: 18,
+                    angle: 270
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
                     x: 16,
-                    y: 18
+                    y: 18,
+                    angle: 270
                 },
                 {
                     gameObjectType: unitObjectType.bazookaSoldier,
                     playerIndex: 1,
-                    x: 14   ,
-                    y: 6
+                    x: 14,
+                    y: 6,
+                    angle: 90
                 },{
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 0,
                     x: 2,
-                    y: 15
+                    y: 15,
+                    angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 0,
                     x: 3,
-                    y: 17
+                    y: 17,
+                    angle: 90
                 },
                 {
                     gameObjectType: unitObjectType.bazookaSoldier,
                     playerIndex: 0,
                     x: 6,
-                    y: 7
+                    y: 7,
+                    angle: 90
                 },{
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 0,
                     x: 9,
-                    y: 12
+                    y: 12,
+                    angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 0,
                     x: 4,
-                    y: 3
+                    y: 3,
+                    angle: 90
                 },
                 {
                     gameObjectType: unitObjectType.bazookaSoldier,
                     playerIndex: 0,
                     x: 1,
-                    y: 16
+                    y: 16,
+                    angle: 90
                 },{
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 1,
                     x: 13,
-                    y: 16
+                    y: 16,
+                    angle: 270
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
                     x: 18,
-                    y: 5
+                    y: 5,
+                    angle: 270
                 },
                 {
                     gameObjectType: unitObjectType.bazookaSoldier,
                     playerIndex: 1,
                     x: 16,
-                    y: 17
+                    y: 17,
+                    angle: 270
                 },{
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 1,
                     x: 11,
-                    y: 18
+                    y: 18,
+                    angle: 270
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
                     x: 13,
-                    y: 18
+                    y: 18,
+                    angle: 270
                 },
                 {
                     gameObjectType: unitObjectType.bazookaSoldier,
                     playerIndex: 1,
                     x: 17,
-                    y: 6
+                    y: 6,
+                    angle: 270
                 }]
         }
     ];

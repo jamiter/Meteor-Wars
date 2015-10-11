@@ -36,6 +36,7 @@ Template.RoundSettings.events
       unit =
         x: unitObject.x
         y: unitObject.y
+        angle: unitObject.angle
         playerIndex: unitObject.playerIndex
 
       for attr of unitObject.unitObjectType

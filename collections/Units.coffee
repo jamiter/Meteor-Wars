@@ -9,6 +9,10 @@ UnitSchema = new SimpleSchema
     type: Number
   y:
     type: Number
+  angle:
+    type: Number
+    min: 0
+    max: 360
   name:
     type: String
   type:
