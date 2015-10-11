@@ -1,5 +1,3 @@
-
-
 Template.RoundSettings.helpers
   map: ->
     gameId = FlowRouter.getParam 'gameId'
@@ -29,9 +27,19 @@ Template.RoundSettings.events
 
   'click .start-game': (event) ->
     roundId = FlowRouter.getParam 'roundId'
+    console.log this
     selectedMap = this
-    Rounds.update({_id: roundId},{$set: {selectedMap: selectedMap}})
+    Rounds.update({_id: roundId}, {$set: {selectedMap: selectedMap.name, mapMatrix: selectedMap.mapMatrix}})
     round = Rounds.findOne(_id: roundId)
+    console.log round
+    i = 0
+    while i < selectedMap.objectMapping.length
+      unitObject = selectedMap.objectMapping[i]
+      unit = {roundId: round._id, mapMatrixPosition: unitObject.position}
+      for attr of unitObject.unitObjectType
+        unit[attr] = unitObject.unitObjectType[attr]
+      Units.insert(unit);
+      i++
 
     round.start()
 
@@ -39,3 +47,4 @@ Template.RoundSettings.events
 
   'click .go-to-game': (event) ->
     FlowRouter.go "/games/#{@gameId}/rounds/#{@_id}/play"
+

@@ -3,15 +3,28 @@
     new Unit data
 
 UnitSchema = new SimpleSchema
-  unitTypeId:
-    type: String
   roundId:
     type: String
-  abilities:
-    type: [String]
-    optional: true
-  rank:
+  mapMatrixPosition:
+    type: [Number]
+  name:
+    type: String
+  type:
+    type: String
+  image:
+    type: String
+  health:
     type: Number
+  minShootingrange:
+    type: Number
+  maxShootingrange:
+    type: Number
+  moverange:
+    type: Number
+  damage:
+    type: Object
+    blackbox: true
+
 
 # Units.attachSchema UnitSchema
 

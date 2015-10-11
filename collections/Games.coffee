@@ -23,9 +23,6 @@ GameSchema = new SimpleSchema
     type: [Object]
     minCount: 1
     blackbox: true
-  gameObjects:
-    type: Object
-    blackbox: true
 
 
 
