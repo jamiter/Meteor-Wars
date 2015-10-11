@@ -1,12 +1,14 @@
-gridItemSize = 50
+gridItemSize = 42
 selectedUnitIdName = 'selectedUnitId'
 targetedUnitIdName = 'targetedUnitId'
 
 Template.Unit.helpers
   unitStyle: ->
     "left: #{@x * gridItemSize}px;
-    top: #{@y * gridItemSize}px;
-    transform: rotate(#{@angle or 0}deg);"
+    top: #{@y * gridItemSize}px;"
+
+  imageStyle: ->
+    "transform: rotate(#{@angle or 0}deg);"
 
   className: ->
     classes = [@type]
@@ -17,8 +19,10 @@ Template.Unit.helpers
     if @_id is Session.get targetedUnitIdName
       classes.push 'targeted'
 
-    if @hasMoved
+    if @canDoAction() and not @canMove()
       classes.push 'moved'
+
+    # if @player().userId
 
     classes.join ' '
 
@@ -34,9 +38,14 @@ Template.Unit.helpers
 Template.Unit.events
   'click .unit': ->
     if @_id isnt Session.get targetedUnitIdName
-      Session.set selectedUnitIdName, @_id
+      if @_id is Session.get selectedUnitIdName
+        Session.set selectedUnitIdName, null
+      else
+        Session.set selectedUnitIdName, @_id
+
       Session.set targetedUnitIdName, null
     else if attacker = Units.findOne Session.get selectedUnitIdName
+      Session.set targetedUnitIdName, null
       attacker.attack this
 
   'mouseover .unit': ->

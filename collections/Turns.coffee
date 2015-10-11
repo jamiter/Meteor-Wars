@@ -20,6 +20,7 @@ class Turn extends Model
     ,
       $unset:
         hasMoved: 1
+        hasAttacked: 1
     ,
       multi: true
 

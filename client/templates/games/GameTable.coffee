@@ -1,5 +1,8 @@
 finder = new PF.AStarFinder(allowDiagonal: false)
-grid = new PF.Grid(10,10)
+gridTileSize = 42
+gridXSize = 25
+gridYSize = 20
+grid = new PF.Grid(gridXSize,gridYSize)
 
 findRound = ->
   roundId = FlowRouter.getParam 'roundId'
@@ -9,6 +12,10 @@ Template.GameTable.onCreated ->
   @path = new ReactiveVar []
 
 Template.GameTable.helpers
+  mapStyle: ->
+    "width: #{gridXSize * gridTileSize}px;
+    height: #{gridYSize * gridTileSize}px"
+
   round: ->
     findRound()
 
@@ -43,9 +50,14 @@ Template.GameTable.helpers
 
 Template.GameTable.events
   'click .add-unit': ->
-    @addUnit
-      x: 0
-      y: 0
+    x = Math.floor Math.random() * gridXSize
+    y = Math.floor Math.random() * gridYSize
+
+    if not Units.findOne(x: x, y: y)
+      @addUnit
+        x: x
+        y: y
+        angle: Math.floor Math.random() * 360
 
   'click .next-turn': ->
     @nextTurn()
@@ -56,9 +68,7 @@ Template.GameTable.events
 
     unit = Units.findOne unitId
 
-    return unless unit
-    return if unit.hasMoved
-    return unless findRound().getCurrentPlayer().userId is Meteor.userId()
+    return unless unit?.canMove()
 
     units = Units.find
       roundId: roundId
@@ -71,18 +81,15 @@ Template.GameTable.events
 
     path = finder.findPath (unit.x or 0), (unit.y or 0), @x, @y, walkGrid
 
-    if path.length > unit.move_range
+    if path.length > (unit.move_range or 5)
       Template.instance().path.set []
     else
       Template.instance().path.set path
 
   'click .grid-item': ->
     return unless unitId = Session.get 'selectedUnitId'
-    return unless findRound().getCurrentPlayer().userId is Meteor.userId()
 
     unit = Units.findOne unitId
-
-    return unless unit
 
     path = Template.instance().path
 

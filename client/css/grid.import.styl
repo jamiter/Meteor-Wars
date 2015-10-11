@@ -1,17 +1,31 @@
-gridSize = 50
+gridSize = 42
+
+@keyframes hangingout
+  from, to
+    transform rotate(0deg)
+
+  33%
+    transform rotate(-15deg)
+
+  66%
+    transform rotate(15deg)
 
 .map
   position relative
+  margin 0 auto 2em
 
   .unit
     position absolute
     width 40px
     height 40px
     border-radius 30px
-    margin 5px
+    margin 1px
     padding 2px
     transition all .2s
     border 2px solid transparent
+
+    svg
+      animation hangingout 5s infinite
 
     &.object
       background black
@@ -21,25 +35,40 @@ gridSize = 50
 
     &.targeted
       border-color orange
+      cursor crosshair
 
     &.moved
-      opacity 0.5
+      opacity 0.6
 
-    .unit-menu
-      background white
-      width 100px
-      li
-        padding .5rem .5rem
+    .strength
+      position absolute
+      right 0
+      bottom -10px
+      display inline-block
+      border 1px solid #999
+      border-radius 2px
+      text-align center
+      min-width 15px
+      padding 0 1px
+      font-size 10px
+      background rgba(255,255,255,0.8)
 
 .grid-item
-  display: block
-  float: left
+  position relative
+  display block
+  float left
   width (gridSize)px
   height (gridSize)px
-  border 1px solid #aaa
+  background url('/img/grass.png')
 
   &[data-x="0"]
     clear both
 
   &.path
-    background-color green
+    .overlay
+      position absolute
+      width inherit
+      height inherit
+      border-radius 5px
+      background-color rgba(255,0,0,0.2)
+      cursor s-resize

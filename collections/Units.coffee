@@ -19,6 +19,36 @@ class Unit extends Model
 
   @_collection: Units
 
+  getMaxHealth: ->
+    # TODO: get this from the unit type
+    100
+
+  getHealth: ->
+    @health ?= 100
+
+  getMaxStrength: ->
+    # TODO: get this from the unit type
+    10
+
+  atMaxStrength: ->
+    @getMaxStrength() is @getStrength()
+
+  getDamage: (unit) ->
+    @basicDamage ?= 30
+
+    Math.ceil @getStrengthDamageModifier() * (@basicDamage + (Math.random() * 20))
+
+  getStrength: ->
+    health = @getHealth()
+
+    if not health
+      0
+    else
+      Math.ceil (health / @getMaxHealth()) * @getMaxStrength()
+
+  getStrengthDamageModifier: ->
+    (@getStrength() / @getMaxStrength())
+
   getTeamColor: ->
     @findPlayer().getTeamColor()
 
@@ -57,17 +87,44 @@ class Unit extends Model
       ]
 
   canTarget: (unit = {}) ->
+    return false if not @canAttack()
     return false if unit.playerId is @playerId
 
     (unit.x is @x and unit.y >= @y-1 and unit.y <= @y+1) or
     (unit.y is @y and unit.x >= @x-1 and unit.x <= @x+1)
 
+  canMove: ->
+    not @hasMoved and not @hasAttacked and @canDoAction()
+
+  canAttack: ->
+    not @hasAttacked and @canDoAction()
+
   attack: (unit = {}) ->
     return unless @canTarget unit
 
-    unit.remove?()
+    @set hasAttacked: true
+
+    unit.takeDamage @getDamage(unit)
+
+    @takeDamage unit.getDamage this
+
+  takeDamage: (damage) ->
+    health = Math.max(0, @getHealth() - damage)
+
+    if health is 0
+      @remove()
+    else
+      @set health: health
+
+  canDoAction: ->
+    player = @findPlayer()
+
+    return false unless player.isCurrentPlayer()
+
+    (not Meteor.isClient) or player.userId is Meteor.userId()
 
   moveAlongPath: (path) ->
+    return unless @canMove()
     return unless path.length > 1
 
     unit = this

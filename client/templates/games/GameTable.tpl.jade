@@ -1,12 +1,14 @@
+.map(style=mapStyle)
+  each grid
+    each this
+      .grid-item(class=gridClass, data-x=x, data-y=y)
+        .overlay
+        
+  each units
+    +Unit
+
 .container
   with round
-    .btn.add-unit Add unit
     if isCurrentPlayer
+      .btn.add-unit Add unit
       .btn.next-turn Next turn
-  .map
-    each grid
-      each this
-        .grid-item(class=gridClass, data-x=x, data-y=y)
-          
-    each units
-      +Unit
