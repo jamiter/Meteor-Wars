@@ -128,48 +128,48 @@ Meteor.startup(function () {
         },
         {
             name: "World War Z",
-            mapMatrix: [20, 20],
+            mapMatrix: [22, 12],
             objectMapping: [
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 0,
                     x: 6,
-                    y: 12,
+                    y: 10,
                     angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 0,
                     x: 8,
-                    y: 17,
+                    y: 11,
                     angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 0,
                     x: 9,
-                    y: 7,
+                    y: 4,
                     angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 0,
                     x: 2,
-                    y: 18,
+                    y: 4,
                     angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 1,
                     x: 11,
-                    y: 17,
+                    y: 6,
                     angle: 270
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 1,
                     x: 16,
-                    y: 19,
+                    y: 7,
                     angle: 270
                 },
                 {
@@ -183,25 +183,25 @@ Meteor.startup(function () {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 1,
                     x: 17,
-                    y: 13,
+                    y: 2,
                     angle: 270
                 },
                 {
                     immutableObjectType: immutableObjectType.city,
                     x: 7,
-                    y: 13,
+                    y: 6,
                     angle: 270
                 },
                 {
                     immutableObjectType: immutableObjectType.city,
                     x: 9,
-                    y: 13,
+                    y: 3,
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.city,
                     x: 12,
-                    y: 11,
+                    y: 9,
                     angle: 90
                 },
                 {
@@ -213,7 +213,7 @@ Meteor.startup(function () {
                 {
                     immutableObjectType: immutableObjectType.city,
                     x: 13,
-                    y: 8,
+                    y: 4,
                     angle: 180
                 },
                 {
@@ -237,31 +237,31 @@ Meteor.startup(function () {
                 {
                     immutableObjectType: immutableObjectType.tree,
                     x: 18,
-                    y: 15,
+                    y: 8,
                     angle: 90
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
                     x: 3,
-                    y: 15,
+                    y: 6,
                     angle: 270
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
                     x: 14,
-                    y: 15,
+                    y: 4,
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
                     x: 19,
-                    y: 17,
+                    y: 8,
                     angle: 90
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
                     x: 6,
-                    y: 14,
+                    y: 10,
                     angle: 270
                 },
                 {
@@ -273,19 +273,19 @@ Meteor.startup(function () {
                 {
                     immutableObjectType: immutableObjectType.tree,
                     x: 5,
-                    y: 18,
+                    y: 8,
                     angle: 90
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
                     x: 18,
-                    y: 3,
+                    y: 5,
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
-                    x: 7,
-                    y: 12,
+                    x: 19,
+                    y: 9,
                     angle: 270
                 },
                 {
@@ -296,22 +296,22 @@ Meteor.startup(function () {
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
-                    x: 3,
-                    y: 5,
+                    x: 13,
+                    y: 9,
                     angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 0,
                     x: 4,
-                    y: 15,
+                    y: 3,
                     angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 0,
                     x: 5,
-                    y: 17,
+                    y: 6,
                     angle: 90
                 },
                 {
@@ -324,7 +324,7 @@ Meteor.startup(function () {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
                     x: 3,
-                    y: 12,
+                    y: 2,
                     angle: 90
                 },
                 {
@@ -338,13 +338,13 @@ Meteor.startup(function () {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
                     x: 8,
-                    y: 16,
+                    y: 5,
                     angle: 90
                 },{
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
                     x: 11,
-                    y: 16,
+                    y: 7,
                     angle: 270
                 },
                 {
@@ -358,20 +358,20 @@ Meteor.startup(function () {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
                     x: 13,
-                    y: 17,
+                    y: 4,
                     angle: 270
                 },{
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
                     x: 19,
-                    y: 18,
+                    y: 5,
                     angle: 270
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
                     x: 16,
-                    y: 18,
+                    y: 2,
                     angle: 270
                 },
                 {
@@ -384,14 +384,14 @@ Meteor.startup(function () {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
                     x: 2,
-                    y: 15,
+                    y: 1,
                     angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 0,
                     x: 3,
-                    y: 17,
+                    y: 3,
                     angle: 90
                 },
                 {
@@ -404,7 +404,7 @@ Meteor.startup(function () {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
                     x: 9,
-                    y: 12,
+                    y: 4,
                     angle: 90
                 },
                 {
@@ -418,40 +418,40 @@ Meteor.startup(function () {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
                     x: 1,
-                    y: 16,
+                    y: 6,
                     angle: 90
                 },{
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
                     x: 13,
-                    y: 16,
+                    y: 3,
                     angle: 270
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
                     x: 18,
-                    y: 5,
+                    y: 10,
                     angle: 270
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
                     x: 16,
-                    y: 17,
+                    y: 4,
                     angle: 270
                 },{
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
                     x: 11,
-                    y: 18,
+                    y: 5,
                     angle: 270
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
                     x: 13,
-                    y: 18,
+                    y: 2,
                     angle: 270
                 },
                 {
