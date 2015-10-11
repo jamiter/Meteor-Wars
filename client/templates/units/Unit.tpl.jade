@@ -8,3 +8,6 @@
       i.fa.fa-lock
   unless atMaxStrength
     .strength #{getStrength}/#{maxStrength}
+  unless atMaxHealth  
+    .health-bar
+      .inner(style="width: {{healthBarWidth}}%;")

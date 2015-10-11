@@ -16,7 +16,7 @@ gridSize = 80
 
 .map
   position relative
-  margin 0 auto 2em
+  margin 0 auto
   background #B3D72F
   &:after
     content ''
@@ -32,6 +32,9 @@ gridSize = 80
     padding 10px
     transition all .2s
     border 2px dashed transparent
+
+    .image
+      transition all .1s
 
     &.immutable
       z-index 1
@@ -66,6 +69,21 @@ gridSize = 80
       padding 0 1px
       font-size 10px
       background rgba(255,255,255,0.8)
+      display none
+
+    .health-bar
+      position absolute
+      left 20px
+      bottom 1px
+      border 1px solid black
+      width 32px
+      height 3px
+      background rgba(255,0,0,0.5)
+      border-radius 2px
+      .inner
+        height 1px
+        background rgb(0,255,0)
+        transition width .3s
 
     .corner-icons
       position absolute
