@@ -27,19 +27,24 @@ Template.RoundSettings.events
 
   'click .start-game': (event) ->
     roundId = FlowRouter.getParam 'roundId'
-    console.log this
+
     selectedMap = this
     Rounds.update({_id: roundId}, {$set: {selectedMap: selectedMap.name, mapMatrix: selectedMap.mapMatrix}})
     round = Rounds.findOne(_id: roundId)
-    console.log round
-    i = 0
-    while i < selectedMap.objectMapping.length
-      unitObject = selectedMap.objectMapping[i]
-      unit = {roundId: round._id, mapMatrixPosition: unitObject.position}
+
+    selectedMap.objectMapping.forEach (unitObject) ->
+      unit =
+        x: unitObject.x
+        y: unitObject.y
+        playerIndex: unitObject.playerIndex
+
       for attr of unitObject.unitObjectType
+        if attr is 'maxHealth'
+          unit.health = unitObject.unitObjectType[attr]
+
         unit[attr] = unitObject.unitObjectType[attr]
-      Units.insert(unit);
-      i++
+
+      round.addUnit unit
 
     round.start()
 
@@ -47,4 +52,3 @@ Template.RoundSettings.events
 
   'click .go-to-game': (event) ->
     FlowRouter.go "/games/#{@gameId}/rounds/#{@_id}/play"
-

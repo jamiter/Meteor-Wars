@@ -19,17 +19,12 @@ GameSchema = new SimpleSchema
     type: String
   playersRequirement:
     type: Number
-  'maps':
+  maps:
     type: [Object]
     minCount: 1
     blackbox: true
 
-
-
-
 Games.attachSchema GameSchema
-
-
 
 class Game extends Model
 

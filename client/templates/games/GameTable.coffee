@@ -1,8 +1,5 @@
 finder = new PF.AStarFinder(allowDiagonal: false)
 gridTileSize = 42
-gridXSize = 25
-gridYSize = 20
-grid = new PF.Grid(gridXSize,gridYSize)
 
 findRound = ->
   roundId = FlowRouter.getParam 'roundId'
@@ -11,10 +8,17 @@ findRound = ->
 Template.GameTable.onCreated ->
   @path = new ReactiveVar []
 
+  @autorun =>
+    round = findRound()
+
+    @grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
+
 Template.GameTable.helpers
   mapStyle: ->
-    "width: #{gridXSize * gridTileSize}px;
-    height: #{gridYSize * gridTileSize}px"
+    grid = Template.instance().grid
+
+    "width: #{grid.width * gridTileSize}px;
+    height: #{grid.heigth * gridTileSize}px"
 
   round: ->
     findRound()
@@ -33,7 +37,7 @@ Template.GameTable.helpers
     findRound()?.hasFinished()
 
   grid: ->
-    grid.nodes
+    Template.instance().grid.nodes
 
   path: ->
     Template.instance().path.get()
@@ -50,8 +54,8 @@ Template.GameTable.helpers
 
 Template.GameTable.events
   'click .add-unit': ->
-    x = Math.floor Math.random() * gridXSize
-    y = Math.floor Math.random() * gridYSize
+    x = Math.floor Math.random() * @mapMatrix[0]
+    y = Math.floor Math.random() * @mapMatrix[1]
 
     if not Units.findOne(x: x, y: y)
       @addUnit
@@ -74,7 +78,7 @@ Template.GameTable.events
       roundId: roundId
       unitId: $ne: unitId
 
-    walkGrid = grid.clone()
+    walkGrid = Template.instance().grid.clone()
 
     units.forEach (unit) ->
       walkGrid.setWalkableAt unit.x, unit.y, false

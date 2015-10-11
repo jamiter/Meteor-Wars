@@ -5,7 +5,8 @@ Meteor.startup(function () {
             name: "G.I. Jane",
             type: "infantry",
             image: "/images/soldier",
-            health: 100,
+            maxHealth: 100,
+            maxStrength: 10,
             minShootingrange: 1,
             maxShootingrange: 1,
             moverange: 5,
@@ -14,13 +15,13 @@ Meteor.startup(function () {
                 armor: 10,
                 air: 0
             }
-        }
-        ,
+        },
         tank: {
             name: "M1 Abrams",
             type: "armor",
             image: "/images/tank",
-            health: 250,
+            maxHealth: 250,
+            maxStrength: 4,
             minShootingrange: 1,
             maxShootingrange: 5,
             moverange: 10,
@@ -29,13 +30,13 @@ Meteor.startup(function () {
                 armor: 50,
                 air: 0
             }
-        }
-        ,
+        },
         bazookaSoldier: {
             name: "Bazooka Bill",
             type: "infantry",
             image: "/images/bazookaSoldier",
-            health: 80,
+            maxHealth: 100,
+            maxStrength: 8,
             minShootingrange: 1,
             maxShootingrange: 2,
             moverange: 5,
@@ -53,15 +54,21 @@ Meteor.startup(function () {
             objectMapping: [
                 {
                     unitObjectType: unitObjectType.soldier,
-                    position: [2, 1]
+                    playerIndex: 0,
+                    x: 2,
+                    y: 1
                 },
                 {
                     unitObjectType: unitObjectType.tank,
-                    position: [5, 3]
+                    playerIndex: 1,
+                    x: 4,
+                    y: 3
                 },
                 {
                     unitObjectType: unitObjectType.bazookaSoldier,
-                    position: [4, 2]
+                    playerIndex: 0,
+                    x: 4,
+                    y: 2
                 }]
         },
         {
@@ -70,15 +77,21 @@ Meteor.startup(function () {
             objectMapping: [
                 {
                     unitObjectType: unitObjectType.soldier,
-                    position: [2, 3]
+                    playerIndex: 0,
+                    x: 2,
+                    y: 3
                 },
                 {
                     unitObjectType: unitObjectType.tank,
-                    position: [17, 3]
+                    playerIndex: 1,
+                    x: 17,
+                    y: 3
                 },
                 {
                     gameObjectType: unitObjectType.bazookaSoldier,
-                    position: [18, 2]
+                    playerIndex: 0,
+                    x: 18,
+                    y: 3
                 }]
         }
     ];
@@ -90,8 +103,6 @@ Meteor.startup(function () {
     };
     var findGame = Games.findOne({name: game.name});
     if (!findGame) {
-        Games.insert(game)
+        Games.insert(game);
     }
 });
-
-

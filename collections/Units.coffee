@@ -5,8 +5,10 @@
 UnitSchema = new SimpleSchema
   roundId:
     type: String
-  mapMatrixPosition:
-    type: [Number]
+  x:
+    type: Number
+  y:
+    type: Number
   name:
     type: String
   type:
@@ -24,7 +26,12 @@ UnitSchema = new SimpleSchema
   damage:
     type: Object
     blackbox: true
-
+  moved:
+    type: Boolean
+    optional: true
+  attacked:
+    type: Boolean
+    optional: true
 
 # Units.attachSchema UnitSchema
 
@@ -33,15 +40,14 @@ class Unit extends Model
   @_collection: Units
 
   getMaxHealth: ->
-    # TODO: get this from the unit type
-    100
+    @maxHealth or 100
 
   getHealth: ->
     @health ?= 100
 
   getMaxStrength: ->
     # TODO: get this from the unit type
-    10
+    @maxStrength or 10
 
   atMaxStrength: ->
     @getMaxStrength() is @getStrength()

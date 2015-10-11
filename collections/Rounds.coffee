@@ -157,10 +157,15 @@ class Round extends Model
     Players.insert mergedData
 
   addUnit: (data = {}) ->
+    if data.playerIndex?
+      if player = @findPlayers($sort: rank: 1).fetch()[data.playerIndex]
+        data.playerId = player._id
+
+    delete data.playerIndex
+
     defaultData =
       roundId: @_id
       gameId: @gameId
-      playerId: @getCurrentPlayer()?._id
 
     mergedData = _.extend {}, data, defaultData
 
@@ -190,7 +195,10 @@ class Round extends Model
     if userId and @createdBy isnt userId
       return false
 
-    Boolean @countPlayers()
+    @countPlayers() >= @findGame().playersRequirement
+
+  findGame: ->
+    Games.findOne @gameId
 
   hasStarted: ->
     Boolean @startedAt
