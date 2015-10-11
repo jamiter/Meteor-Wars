@@ -22,8 +22,8 @@ mquandalle:jade
 coffeescript
 stylus
 accounts-base
-meteorhacks:flow-router
-meteorhacks:flow-layout
+kadira:flow-router
+kadira:blaze-layout
 accounts-ui
 accounts-password
 matb33:collection-hooks
