@@ -3,5 +3,6 @@
 h4 Select a game to play:
 +GameList
 
-h4 Active games:
-+RoundList rounds=activeRounds
+if activeRounds.count
+  h4 Active games:
+  +RoundList rounds=activeRounds

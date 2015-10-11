@@ -1,14 +1,18 @@
-.map-container
-  .map(style=mapStyle)
-    each grid
-      each this
-        .grid-item(class=gridClass, data-x=x, data-y=y)
-          .overlay
-          
-    each units
-      +Unit
-
-.container
+if hasFinished
   with round
-    if isCurrentPlayer
-      .btn.next-turn Next turn
+    +RoundScoreboard
+else
+  .map-container
+    .map(style=mapStyle)
+      each grid
+        each this
+          .grid-item(class=gridClass, data-x=x, data-y=y)
+            .overlay
+            
+      each units
+        +Unit
+
+  .container
+    with round
+      if isCurrentPlayer
+        .btn.next-turn Next turn

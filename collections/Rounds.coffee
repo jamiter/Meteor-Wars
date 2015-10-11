@@ -227,6 +227,10 @@ class Round extends Model
   countUnits: (options) ->
     @findUnits(options).count()
 
+  winner: ->
+    if @winnerId
+      Players.findOne @winnerId
+
 Meteor.methods
   'nextTurn': (roundId) ->
     return if Meteor.isClient
