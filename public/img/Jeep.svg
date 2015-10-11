@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>Jeep</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Jeep" sketch:type="MSLayerGroup">
+            <g id="Car" transform="translate(8.000000, 4.000000)" sketch:type="MSShapeGroup">
+                <rect id="Front-wheels" stroke="#4E4E4E" x="0" y="4.5" width="15" height="5"></rect>
+                <rect id="Back-wheels" stroke="#4E4E4E" x="0" y="15.5" width="15" height="5"></rect>
+                <path d="M2.5,1.5 L4.5,1.5" id="Light" stroke="#F5FF68" stroke-linecap="square"></path>
+                <path d="M10.5,1.5 L12.5,1.5" id="Light" stroke="#F5FF68" stroke-linecap="square"></path>
+                <path d="M0.888888889,1.96545455 C0.888888889,1.96545455 2.16586417,1 7.62791273,1 C13.0899613,1 14.1111111,1.96545455 14.1111111,1.96545455 L14.1111111,23 L0.888888889,23 L0.888888889,1.96545455 Z" id="Jeep-base" stroke="{{strokeTeamColor}}" fill="{{teamColor}}"></path>
+                <path d="M1.83333333,5.5 C1.83333333,5.5 4.76157164,4.5 7.56778971,4.5 C10.3740078,4.5 13.1666667,5.5 13.1666667,5.5 L13.1666667,8.5 L1.83333333,8.5 L1.83333333,5.5 Z" id="Rectangle-14" stroke="#C4C4C4" fill="#EDEDED"></path>
+                <path d="M7.5,4 C8.32842712,4 9,3.32842712 9,2.5 C9,1.67157288 8.32842712,1 7.5,1 C6.67157288,1 6,1.67157288 6,2.5 C6,3.32842712 6.67157288,4 7.5,4 Z" id="Wheel" stroke="#4F4F4F" fill="#FFFFFF"></path>
+                <circle id="Turret" stroke="{{strokeTeamColor}}" fill="{{teamColor}}" cx="9" cy="13" r="3"></circle>
+                <rect id="Rectangle-15" stroke="#4E4E4E" fill="#847741" transform="translate(9.000000, 10.916667) rotate(90.000000) translate(-9.000000, -10.916667) " x="6.41666667" y="9.41666667" width="5.16666667" height="3"></rect>
+                <path d="M9,6 L9,8" id="Line" stroke="#4E4E4E" stroke-linecap="square"></path>
+                <path d="M2.5,21.5 L12.5,21.5" id="Line" stroke="#A2A2A2" stroke-linecap="square" opacity="0.394706157"></path>
+                <path d="M3.5,19.5 L3.5,9.51049805 L6.5065918,9.51049805" id="Line" stroke="#FFFFFF" stroke-linecap="square" opacity="0.343458489"></path>
+            </g>
+        </g>
+    </g>
+</svg>
