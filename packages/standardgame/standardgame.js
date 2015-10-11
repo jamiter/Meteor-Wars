@@ -1,7 +1,7 @@
 Meteor.startup(function () {
     var unitObjectType =
     {
-        soldier: {
+        rifleman: {
             name: "G.I. Jane",
             type: "infantry",
             templateName: "UnitRifleman",
@@ -26,12 +26,12 @@ Meteor.startup(function () {
             maxShootingrange: 5,
             moverange: 10,
             damage: {
-                infantry: 100,
-                armor: 50,
+                infantry: 70,
+                armor: 80,
                 air: 0
             }
         },
-        bazookaSoldier: {
+        bazooka: {
             name: "Bazooka Bill",
             type: "infantry",
             templateName: "UnitBazooka",
@@ -39,7 +39,7 @@ Meteor.startup(function () {
             maxStrength: 8,
             minShootingrange: 1,
             maxShootingrange: 2,
-            moverange: 5,
+            moverange: 4,
             damage: {
                 infantry: 20,
                 armor: 100,
@@ -53,7 +53,7 @@ Meteor.startup(function () {
             mapMatrix: [5, 5],
             objectMapping: [
                 {
-                    unitObjectType: unitObjectType.soldier,
+                    unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
                     x: 2,
                     y: 1
@@ -65,7 +65,7 @@ Meteor.startup(function () {
                     y: 3
                 },
                 {
-                    unitObjectType: unitObjectType.bazookaSoldier,
+                    unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
                     x: 4,
                     y: 2
@@ -76,7 +76,7 @@ Meteor.startup(function () {
             mapMatrix: [20, 20],
             objectMapping: [
                 {
-                    unitObjectType: unitObjectType.soldier,
+                    unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
                     x: 4,
                     y: 15,
@@ -90,13 +90,13 @@ Meteor.startup(function () {
                     angle: 90
                 },
                 {
-                    gameObjectType: unitObjectType.bazookaSoldier,
+                    unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
                     x: 8,
                     y: 7,
                     angle: 90
                 },{
-                    unitObjectType: unitObjectType.soldier,
+                    unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
                     x: 3,
                     y: 12,
@@ -110,13 +110,13 @@ Meteor.startup(function () {
                     angle: 90
                 },
                 {
-                    gameObjectType: unitObjectType.bazookaSoldier,
+                    unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
                     x: 8,
                     y: 16,
                     angle: 90
                 },{
-                    unitObjectType: unitObjectType.soldier,
+                    unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
                     x: 11,
                     y: 16,
@@ -130,13 +130,13 @@ Meteor.startup(function () {
                     angle: 270
                 },
                 {
-                    gameObjectType: unitObjectType.bazookaSoldier,
+                    unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
                     x: 13,
                     y: 17,
                     angle: 270
                 },{
-                    unitObjectType: unitObjectType.soldier,
+                    unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
                     x: 19,
                     y: 18,
@@ -150,13 +150,13 @@ Meteor.startup(function () {
                     angle: 270
                 },
                 {
-                    gameObjectType: unitObjectType.bazookaSoldier,
+                    unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
                     x: 14,
                     y: 6,
                     angle: 90
                 },{
-                    unitObjectType: unitObjectType.soldier,
+                    unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
                     x: 2,
                     y: 15,
@@ -170,13 +170,13 @@ Meteor.startup(function () {
                     angle: 90
                 },
                 {
-                    gameObjectType: unitObjectType.bazookaSoldier,
+                    unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
                     x: 6,
                     y: 7,
                     angle: 90
                 },{
-                    unitObjectType: unitObjectType.soldier,
+                    unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
                     x: 9,
                     y: 12,
@@ -190,13 +190,13 @@ Meteor.startup(function () {
                     angle: 90
                 },
                 {
-                    gameObjectType: unitObjectType.bazookaSoldier,
+                    unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
                     x: 1,
                     y: 16,
                     angle: 90
                 },{
-                    unitObjectType: unitObjectType.soldier,
+                    unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
                     x: 13,
                     y: 16,
@@ -210,13 +210,13 @@ Meteor.startup(function () {
                     angle: 270
                 },
                 {
-                    gameObjectType: unitObjectType.bazookaSoldier,
+                    unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
                     x: 16,
                     y: 17,
                     angle: 270
                 },{
-                    unitObjectType: unitObjectType.soldier,
+                    unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
                     x: 11,
                     y: 18,
@@ -230,7 +230,7 @@ Meteor.startup(function () {
                     angle: 270
                 },
                 {
-                    gameObjectType: unitObjectType.bazookaSoldier,
+                    unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
                     x: 17,
                     y: 6,
