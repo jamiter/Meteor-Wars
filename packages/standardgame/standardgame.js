@@ -7,7 +7,7 @@ Meteor.startup(function () {
             templateName: "UnitRifleman",
             maxHealth: 100,
             maxStrength: 10,
-            minShootingrange: 1,
+            minShootingrange: 0,
             maxShootingrange: 1,
             moverange: 5,
             damage: {
@@ -22,9 +22,9 @@ Meteor.startup(function () {
             templateName: "UnitTank",
             maxHealth: 250,
             maxStrength: 4,
-            minShootingrange: 1,
+            minShootingrange: 0,
             maxShootingrange: 5,
-            moverange: 10,
+            moverange: 8,
             damage: {
                 infantry: 70,
                 armor: 80,
@@ -37,46 +37,271 @@ Meteor.startup(function () {
             templateName: "UnitBazooka",
             maxHealth: 100,
             maxStrength: 8,
-            minShootingrange: 1,
-            maxShootingrange: 2,
+            minShootingrange: 0,
+            maxShootingrange: 3,
             moverange: 4,
             damage: {
                 infantry: 20,
                 armor: 100,
                 air: 50
             }
+        },
+        jeep: {
+            name: "Meep Jeep",
+            type: "armor",
+            templateName: "UnitJeep",
+            maxHealth: 150,
+            maxStrength: 8,
+            minShootingrange: 0,
+            maxShootingrange: 2,
+            moverange: 10,
+            damage: {
+                infantry: 100,
+                armor: 20,
+                air: 20
+            }
+        }
+    };
+    var immutableObjectType = {
+        tree: {
+            name: "Bonsai Tree",
+            type: "Unmovable",
+            templateName: "StructTree",
+            walkable: true,
+            cover: true,
+            maxHealth: 150
+        },
+        city: {
+            name: "Gotham",
+            type: "Unmovable",
+            templateName: "StructTree",
+            walkable: true,
+            cover: true,
+            maxHealth: 300
         }
     };
     var maps = [
         {
-            name: "TestMap",
+            name: "Rough Neighbourhood",
             mapMatrix: [5, 5],
             objectMapping: [
                 {
                     unitObjectType: unitObjectType.rifleman,
-                    playerIndex: 0,
+                    playerIndex: 1,
                     x: 2,
-                    y: 1
+                    y: 1,
+                    angle: 90
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
                     x: 4,
-                    y: 3
+                    y: 3,
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
-                    playerIndex: 0,
+                    playerIndex: 1,
                     x: 4,
-                    y: 2
+                    y: 2,
+                    angle: 270
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    x: 4,
+                    y: 1,
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 0,
+                    y: 3,
+                    angle: 90
+                },
+                {
+                    unitObjectType: unitObjectType.jeep,
+                    playerIndex: 0,
+                    x: 2,
+                    y: 4,
+                    angle: 270
                 }]
         },
         {
-            name: "AnotherTestMap",
+            name: "World War Z",
             mapMatrix: [20, 20],
             objectMapping: [
                 {
-                    unitObjectType: unitObjectType.rifleman,
+                    unitObjectType: unitObjectType.jeep,
+                    playerIndex: 0,
+                    x: 6,
+                    y: 12,
+                    angle: 90
+                },
+                {
+                    unitObjectType: unitObjectType.jeep,
+                    playerIndex: 0,
+                    x: 8,
+                    y: 17,
+                    angle: 90
+                },
+                {
+                    unitObjectType: unitObjectType.jeep,
+                    playerIndex: 0,
+                    x: 9,
+                    y: 7,
+                    angle: 90
+                },
+                {
+                    unitObjectType: unitObjectType.jeep,
+                    playerIndex: 0,
+                    x: 2,
+                    y: 18,
+                    angle: 90
+                },
+                {
+                    unitObjectType: unitObjectType.jeep,
+                    playerIndex: 1,
+                    x: 11,
+                    y: 17,
+                    angle: 270
+                },
+                {
+                    unitObjectType: unitObjectType.jeep,
+                    playerIndex: 1,
+                    x: 16,
+                    y: 19,
+                    angle: 270
+                },
+                {
+                    unitObjectType: unitObjectType.jeep,
+                    playerIndex: 1,
+                    x: 18,
+                    y: 3,
+                    angle: 270
+                },
+                {
+                    unitObjectType: unitObjectType.jeep,
+                    playerIndex: 1,
+                    x: 17,
+                    y: 13,
+                    angle: 270
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    x: 7,
+                    y: 13,
+                    angle: 270
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    x: 9,
+                    y: 13,
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    x: 12,
+                    y: 11,
+                    angle: 90
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    x: 9,
+                    y: 9,
+                    angle: 270
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    x: 13,
+                    y: 8,
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    x: 11,
+                    y: 7,
+                    angle: 90
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    x: 11,
+                    y: 8,
+                    angle: 270
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 8,
+                    y: 4,
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 18,
+                    y: 15,
+                    angle: 90
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 3,
+                    y: 15,
+                    angle: 270
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 14,
+                    y: 15,
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 19,
+                    y: 17,
+                    angle: 90
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 6,
+                    y: 14,
+                    angle: 270
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 9,
+                    y: 5,
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 5,
+                    y: 18,
+                    angle: 90
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 18,
+                    y: 3,
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 7,
+                    y: 12,
+                    angle: 270
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 17,
+                    y: 7,
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    x: 3,
+                    y: 5,
+                    angle: 90
+                },
+                {
+                    unitObjectType: unitObjectType.soldier,
                     playerIndex: 0,
                     x: 4,
                     y: 15,
