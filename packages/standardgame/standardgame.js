@@ -4,7 +4,7 @@ Meteor.startup(function () {
         soldier: {
             name: "G.I. Jane",
             type: "infantry",
-            image: "/images/soldier",
+            templateName: "UnitRifleman",
             maxHealth: 100,
             maxStrength: 10,
             minShootingrange: 1,
@@ -19,7 +19,7 @@ Meteor.startup(function () {
         tank: {
             name: "M1 Abrams",
             type: "armor",
-            image: "/images/tank",
+            templateName: "UnitTank",
             maxHealth: 250,
             maxStrength: 4,
             minShootingrange: 1,
@@ -34,7 +34,7 @@ Meteor.startup(function () {
         bazookaSoldier: {
             name: "Bazooka Bill",
             type: "infantry",
-            image: "/images/bazookaSoldier",
+            templateName: "UnitBazooka",
             maxHealth: 100,
             maxStrength: 8,
             minShootingrange: 1,

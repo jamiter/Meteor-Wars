@@ -1,5 +1,5 @@
 finder = new PF.AStarFinder(allowDiagonal: false)
-gridTileSize = 42
+gridTileSize = 80
 
 findRound = ->
   roundId = FlowRouter.getParam 'roundId'

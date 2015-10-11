@@ -1,4 +1,4 @@
-gridItemSize = 42
+gridItemSize = 80
 selectedUnitIdName = 'selectedUnitId'
 targetedUnitIdName = 'targetedUnitId'
 
@@ -11,13 +11,7 @@ Template.Unit.helpers
     "transform: rotate(#{@angle or 0}deg);"
 
   unitTemplate: ->
-    switch @type
-      when 'armor'
-        'UnitTank'
-      when 'infantry'
-        'UnitRifleman'
-      else
-        'UnitRifleman'
+    @templateName
 
   unitData: ->
     teamColor: @getTeamColor()

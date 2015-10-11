@@ -6,9 +6,18 @@ Package.describe({
   documentation: 'README.md'
 });
 
+var unitFiles = [
+  'units/UnitRifleman.html',
+  'units/UnitTank.html',
+  'units/UnitBazooka.html',
+];
+
 Package.onUse(function(api) {
   api.versionsFrom('1.2.0.2');
   api.use('ecmascript');
+  api.use('blaze-html-templates');
+
+  api.addFiles(unitFiles, 'client');
+
   api.addFiles('standardgame.js', 'server');
 });
-

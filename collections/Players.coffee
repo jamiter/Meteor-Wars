@@ -22,6 +22,6 @@ class Player extends Model
 
   getTeamColor: ->
     if @rank is 1
-      "#072"
+      "#48C8F8"
     else
-      "#720"
+      "#F00008"

@@ -1,4 +1,4 @@
-gridSize = 42
+gridSize = 80
 
 @keyframes hangingout
   from, to
@@ -16,13 +16,17 @@ gridSize = 42
 
   .unit
     position absolute
-    width 40px
-    height 40px
-    border-radius 30px
-    margin 1px
-    padding 2px
+    width 72px
+    height 72px
+    border-radius 70px
+    margin 4px
+    padding 6px
     transition all .2s
     border 2px solid transparent
+
+    svg
+      width 55px
+      height 55px
 
     .infantry
       animation hangingout 5s infinite
@@ -60,6 +64,7 @@ gridSize = 42
   width (gridSize)px
   height (gridSize)px
   background url('/img/grass.png')
+  background-size 112%
 
   &[data-x="0"]
     clear both
