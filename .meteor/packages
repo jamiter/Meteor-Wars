@@ -37,3 +37,4 @@ fortawesome:fontawesome
 
 pathfinding # A wrapper around PathFinder.js
 tinycolor2 # Also a wrapper
+ryanswapp:spectrum-colorpicker

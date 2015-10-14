@@ -1,3 +1,5 @@
 .collection-item
-  .fa.fa-user
+  .fa.fa-user(style=getStyle)
   span= name
+  if isMe
+    input(type="text", id="colorpicker")
