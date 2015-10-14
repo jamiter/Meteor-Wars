@@ -1,3 +1,8 @@
+Template.GamePage.onCreated ->
+  @autorun =>
+    if gameId = FlowRouter.getParam 'gameId'
+      @subscribe 'players', gameId: gameId
+
 Template.GamePage.helpers
   game: ->
     gameId = FlowRouter.getParam 'gameId'

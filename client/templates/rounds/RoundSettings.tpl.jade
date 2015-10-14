@@ -1,5 +1,7 @@
 with round
-  h2= findGame.name
+  h2
+    span #{name}
+    small (#{findGame.name})
   i Get ready to rumble...
 
   h4 Players
@@ -8,10 +10,14 @@ with round
   unless hasStarted
     if canJoin
       button.btn.join-game Join game
+    else if maxPlayersReached
+      p This game has the maximum number of players.
+      
     if canStart
       .btn.start-game Start game
+    else if maxPlayersReached
+      p Waiting for <b>#{hostName}</b> to start the game...
     else
-      if countPlayers
-        p Waiting for more players or #{hostName} to start the game...
+      p Waiting for more players...
   else
     button.btn.go-to-game Go to game

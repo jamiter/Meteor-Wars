@@ -28,6 +28,15 @@ class Round extends Model
   @ERROR_PLAYER_ALREADY_JOINED = "The player is already in this round"
   @ERROR_USER_ALREADY_JOINED = "The user is already in this round"
 
+  name: ->
+    @creatorName() + "'s game"
+
+  creatorName: ->
+    Players.findOne(
+      roundId: @_id
+      userId: @createdBy
+    )?.name or 'unknown'
+
   finish: ->
     @update $set: finishedAt: new Date
     @hasFinished()
@@ -123,8 +132,12 @@ class Round extends Model
 
       nextPlayer or findFirst()
 
+  maxPlayersReached: ->
+    @findPlayers().count() >= @findGame().playersRequirement
+
   canJoin: (userId) ->
     return false if @hasStarted()
+    return false if @maxPlayersReached()
 
     # AI players have no userId
     return true if not userId
