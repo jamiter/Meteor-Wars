@@ -23,6 +23,7 @@ reactive-var
 reactive-dict
 accounts-ui
 accounts-password
+check
 
 matb33:collection-hooks
 momentjs:moment

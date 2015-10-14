@@ -76,3 +76,8 @@ Template.RoundSettings.events
 
   'click .go-to-game': (event) ->
     FlowRouter.go "/games/#{@gameId}/rounds/#{@_id}/play"
+
+  'click .add-ai': ->
+    roundId = FlowRouter.getParam 'roundId'
+
+    Meteor.call 'round/add-ai', roundId
