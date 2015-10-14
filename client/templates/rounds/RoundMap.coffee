@@ -5,7 +5,7 @@ findRound = ->
   roundId = FlowRouter.getParam 'roundId'
   round = Rounds.findOne roundId
 
-Template.GameTable.onCreated ->
+Template.RoundMap.onCreated ->
   @path = new ReactiveVar []
 
   @autorun =>
@@ -28,10 +28,10 @@ Template.GameTable.onCreated ->
     @subscribe 'immutables', roundId: roundId
     @subscribe 'turns', roundId: roundId
 
-Template.GameTable.onRendered ->
+Template.RoundMap.onRendered ->
   @$('.modal-trigger').leanModal()
 
-Template.GameTable.helpers
+Template.RoundMap.helpers
   mapStyle: ->
     grid = Template.instance().grid
 
@@ -75,7 +75,7 @@ Template.GameTable.helpers
   isCurrentPlayer: ->
     @getCurrentPlayer().userId is Meteor.userId()
 
-Template.GameTable.events
+Template.RoundMap.events
   'click .modal-trigger': (e) ->
     Template.instance().$('#surrenderModal').openModal()
 

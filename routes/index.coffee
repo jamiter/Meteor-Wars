@@ -12,4 +12,4 @@ FlowRouter.route '/games/:gameId/rounds/:roundId',
 
 FlowRouter.route '/games/:gameId/rounds/:roundId/play',
   action: ->
-    BlazeLayout.render 'GameLayout', main: 'GameTable'
+    BlazeLayout.render 'GameLayout', main: 'RoundMap'
