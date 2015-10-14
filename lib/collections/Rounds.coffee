@@ -51,7 +51,7 @@ class Round extends Model
   nextTurn: ->
     # This can only be done server side
     if Meteor.isClient
-      return Meteor.call 'nextTurn', @_id
+      return Meteor.call 'round/nextTurn', @_id
 
     @_checkFinished()
 
@@ -235,15 +235,3 @@ class Round extends Model
   winner: ->
     if @winnerId
       Players.findOne @winnerId
-
-Meteor.methods
-  'nextTurn': (roundId) ->
-    return if Meteor.isClient
-    return unless roundId
-    return unless @userId
-
-    return unless round = Rounds.findOne roundId
-    return unless player = Players.findOne userId: @userId, roundId: roundId
-    # return if player._id isnt round.getCurrentPlayer()._id
-
-    round.nextTurn()

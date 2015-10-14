@@ -28,6 +28,9 @@ Template.GameTable.onCreated ->
     @subscribe 'immutables', roundId: roundId
     @subscribe 'turns', roundId: roundId
 
+Template.GameTable.onRendered ->
+  @$('.modal-trigger').leanModal()
+
 Template.GameTable.helpers
   mapStyle: ->
     grid = Template.instance().grid
@@ -73,6 +76,14 @@ Template.GameTable.helpers
     @getCurrentPlayer().userId is Meteor.userId()
 
 Template.GameTable.events
+  'click .modal-trigger': (e) ->
+    Template.instance().$('#surrenderModal').openModal()
+
+  'click #surrenderBtn': ->
+    roundId = FlowRouter.getParam 'roundId'
+
+    Meteor.call 'round/surrender', roundId
+
   'click .add-unit': ->
     x = Math.floor Math.random() * @mapMatrix[0]
     y = Math.floor Math.random() * @mapMatrix[1]

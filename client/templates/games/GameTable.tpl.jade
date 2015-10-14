@@ -18,6 +18,10 @@
                     .btn.next-turn
                       .fa.fa-check
                       span I'm done!
+                  li
+                    .btn-flat.surrender.modal-trigger(data-target="surrenderModal")
+                      .fa.fa-flag
+                      span Surrender
               else
                 with getCurrentPlayer
                   ul.right
@@ -42,3 +46,11 @@ else
               
         each units
           +Unit
+
+#surrenderModal.modal
+  .modal-content
+    h4 Do you wish to surrender?
+    p This will end the game and your opponent will win!
+  .modal-footer
+    a#surrenderBtn.modal-action.modal-close.btn-flat(href="#!") Yes, I surrender!
+    a.modal-action.modal-close.btn-flat(href="#!") Nope, fight on!
