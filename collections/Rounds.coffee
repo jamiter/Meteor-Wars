@@ -255,6 +255,6 @@ Meteor.methods
 
     return unless round = Rounds.findOne roundId
     return unless player = Players.findOne userId: @userId, roundId: roundId
-    return if player._id isnt round.getCurrentPlayer()._id
+    # return if player._id isnt round.getCurrentPlayer()._id
 
     round.nextTurn()
