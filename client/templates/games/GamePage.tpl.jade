@@ -3,11 +3,13 @@ with game
   
   +RoundCreateForm
   
-  h4 Pending games
-  +RoundList rounds=pendingRounds
-  
-  h4 Active games
-  +RoundList rounds=activeRounds
-  
-  h4 Finished games
-  +RoundList rounds=finishedRounds
+  .row
+    .col.s4
+      h4 Pending games
+      +RoundList rounds=pendingRounds
+    .col.s4
+      h4 Active games
+      +RoundList rounds=activeRounds
+    .col.s4
+      h4 Finished games
+      +RoundList rounds=finishedRounds
