@@ -1,17 +1,17 @@
-h2 Game settings
-
 with round
+  h2= findGame.name
+  i Get ready to rumble...
+
   h4 Players
   +PlayerList players=findPlayers
+  
   unless hasStarted
     if canJoin
       button.btn.join-game Join game
     if canStart
-      each map
-        p
-          button.btn.start-game Start a {{name}} map game
+      .btn.start-game Start game
     else
       if countPlayers
-        p Waiting for #{hostName} to start the game...
+        p Waiting for more players or #{hostName} to start the game...
   else
     button.btn.go-to-game Go to game

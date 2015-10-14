@@ -17,22 +17,23 @@ es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 insecure
-mquandalle:jade
 coffeescript
 stylus
 accounts-base
-kadira:flow-router
-kadira:blaze-layout
+reactive-var
+reactive-dict
 accounts-ui
 accounts-password
+
 matb33:collection-hooks
 momentjs:moment
 aldeed:collection2
 materialize:materialize@=0.97.0
-
-pathfinding
-tinycolor2
-reactive-var
-reactive-dict
+mquandalle:jade
+kadira:flow-router
+kadira:blaze-layout
 meteorwars:standardgame
 fortawesome:fontawesome
+
+pathfinding # A wrapper around PathFinder.js
+tinycolor2 # Also a wrapper

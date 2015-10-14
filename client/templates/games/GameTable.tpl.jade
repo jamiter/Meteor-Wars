@@ -1,16 +1,14 @@
-if hasFinished
-  with round
-    +RoundScoreboard
-else
-  .navbar-fixed
-    nav
-      .nav-wrapper
-        .container
-          a.brand-logo.center(href='/') Meteor Wars
-          ul.left
-            li
-              +loginButtons
-          if Template.subscriptionsReady
+.navbar-fixed
+  nav
+    .nav-wrapper
+      .container
+        a.brand-logo.center(href='/') Meteor Wars
+        ul.left
+          li
+            +loginButtons
+            
+        if Template.subscriptionsReady
+          unless hasFinished
             with round
               if isCurrentPlayer
                 ul.right
@@ -24,8 +22,11 @@ else
                 with getCurrentPlayer
                   ul.right
                     li #{name} is playing
-                    
-  
+
+if hasFinished
+  with round
+    +RoundScoreboard
+else
   .map-container
     unless Template.subscriptionsReady
       +Loader

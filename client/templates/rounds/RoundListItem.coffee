@@ -1,3 +1,5 @@
 Template.RoundListItem.helpers
+  date: ->
+    moment(@createdAt).format('LLL')
   name: ->
-    @name or @_id
+    @findGame()?.name or @name or @_id

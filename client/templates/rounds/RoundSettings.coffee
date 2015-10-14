@@ -1,3 +1,13 @@
+findRound = ->
+  return unless roundId = FlowRouter.getParam 'roundId'
+
+  Rounds.findOne _id: roundId
+
+Template.RoundSettings.onCreated ->
+  @autorun =>
+    if (round = findRound()) and round.hasStarted()
+      FlowRouter.go "/games/#{round.gameId}/rounds/#{round._id}/play"
+
 Template.RoundSettings.helpers
   map: ->
     gameId = FlowRouter.getParam 'gameId'
@@ -18,19 +28,25 @@ Template.RoundSettings.helpers
   canStart: ->
     @canStart Meteor.userId()
 
+  imOwner: ->
+    Meteor.userId() is @createdBy
+
 Template.RoundSettings.events
   'click .join-game': (event) ->
     @addPlayer userId: Meteor.userId()
 
   'click .leave-game': (event) ->
 
-
   'click .start-game': (event) ->
+    gameId = FlowRouter.getParam 'gameId'
     roundId = FlowRouter.getParam 'roundId'
 
-    selectedMap = this
-    Rounds.update({_id: roundId}, {$set: {selectedMap: selectedMap.name, mapMatrix: selectedMap.mapMatrix}})
+    maps = Games.findOne(_id: gameId).maps
+
     round = Rounds.findOne(_id: roundId)
+
+    selectedMap = maps[maps.length-1]
+    Rounds.update({_id: roundId}, {$set: {selectedMap: selectedMap.name, mapMatrix: selectedMap.mapMatrix}})
 
     selectedMap.objectMapping.forEach (object) ->
       unit =

@@ -1,5 +1,5 @@
 a.round.collection-item(href="/games/{{gameId}}/rounds/{{_id}}")
-  span= name
+  span #{name} (#{date})
   if hasStarted
     if hasFinished
       span  (finished)
