@@ -10,5 +10,5 @@ Npm.depends({
 Package.onUse(function (api) {
   api.addFiles('./.npm/package/node_modules/pathfinding/visual/lib/pathfinding-browser.min.js', ['client']);
   api.addFiles('./pathfinding.js', ['server']);
-  api.export('pathfinding', ['server', 'client']);
+  api.export('PF', ['server']);
 });

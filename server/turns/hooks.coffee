@@ -5,4 +5,4 @@ Turns.after.update (userId, doc, fieldNames) ->
     player = Players.findOne doc.playerId
 
     if player?.isAi()
-      player.findRound().nextTurn()
+      player.runAi()

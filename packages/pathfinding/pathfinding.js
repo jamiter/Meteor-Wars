@@ -1,1 +1,1 @@
-var pathfinding = Npm.require('pathfinding');
+PF = Npm.require('pathfinding');

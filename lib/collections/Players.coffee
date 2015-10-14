@@ -39,3 +39,18 @@ class Player extends Model
           "#FF0"
         else
           "#999"
+
+  runAi: ->
+    round = @findRound()
+
+    units = Units.find
+      playerId: @_id
+      roundId: @roundId
+      moved: null
+
+    unitPromises = units.map (unit) ->
+      unit.runAi()
+
+    Promise.all unitPromises
+    .then ->
+      round.nextTurn()

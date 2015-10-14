@@ -1,3 +1,5 @@
+finder = new PF.AStarFinder(allowDiagonal: false)
+
 @Units = new Mongo.Collection 'units',
   transform: (data) ->
     new Unit data
@@ -161,9 +163,50 @@ class Unit extends Model
 
     (not Meteor.isClient) or player.userId is Meteor.userId()
 
+  getReachableTiles: (grid, options = {}) ->
+    tiles = []
+    indexedTiles = {}
+
+    if not @canMove()
+      # Do nothing
+    else if not @moverange or @moverange < 1
+      # Do nothing
+    else
+      leftX = Math.max 0, @x - @moverange
+      topY = Math.max 0, @y - @moverange
+      rightX = Math.min grid.width - 1, @x + @moverange
+      bottomY = Math.min grid.height - 1, @y + @moverange
+
+      units = Units.find
+        roundId: @roundId
+        unitId: $ne: @_id
+
+      walkGrid = grid.clone()
+
+      units.forEach (unit) ->
+        walkGrid.setWalkableAt unit.x, unit.y, false
+
+      for x in [leftX..rightX]
+        for y in [topY..bottomY]
+          # Do mark the units position as walkable
+          continue if x is @x and y is @y
+
+          path = finder.findPath @x, @y, x, y, walkGrid.clone()
+
+          if path.length and path.length <= @moverange
+            if options.indexed
+              indexedTiles["#{x}:#{y}"] = 1
+            else
+              tiles.push [x,y]
+
+    if options.indexed
+      indexedTiles
+    else
+      tiles
+
   moveAlongPath: (path) ->
     return unless @canMove()
-    return unless path.length > 1
+    # return unless path.length > 1
 
     unit = this
 
@@ -198,3 +241,21 @@ class Unit extends Model
 
     createWaitPromite(0).then =>
       @set moved: true
+
+  runAi: ->
+    round = @findRound()
+
+    grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
+
+    tiles = @getReachableTiles grid
+
+    index = Math.floor Math.random() * tiles.length
+
+    target = tiles[index]
+
+    if target
+      path = finder.findPath @x, @y, target[0], target[1], grid.clone()
+    else
+      path = []
+
+    @moveAlongPath(path)

@@ -13,8 +13,21 @@ Template.RoundMap.onCreated ->
       @grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
 
   @autorun =>
-    if not Session.get 'selectedUnitId'
+    unitId = Session.get 'selectedUnitId'
+
+    return unless @grid
+
+    if not unitId
       @path.set []
+      Session.set 'reachableTiles', {}
+    else
+      unit = Units.findOne unitId
+
+      return unless unit
+
+      tiles = unit.getReachableTiles @grid, indexed: true
+
+      Session.set 'reachableTiles', tiles
 
   @autorun =>
     return unless Meteor.userId()
@@ -66,11 +79,20 @@ Template.RoundMap.helpers
     Template.instance().path.get()
 
   gridClass: ->
+    classes = []
+
     path = Template.instance().path.get()
 
     for point in path
       if (@x is point[0]) and (@y is point[1])
-        return 'path'
+        classes.push 'path'
+        break
+
+    if tiles = Session.get 'reachableTiles'
+      if tiles["#{@x}:#{@y}"]
+        classes.push 'reachable'
+
+    classes.join ' '
 
   isCurrentPlayer: ->
     @getCurrentPlayer().userId is Meteor.userId()

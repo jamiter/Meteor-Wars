@@ -106,11 +106,17 @@ greenBgColor = #B3D72F
   &[data-x="0"]
     clear both
 
+  .overlay
+    position absolute
+    width inherit
+    height inherit
+    border-radius 5px
+
+  &.reachable
+    .overlay
+      background-color rgba(255,255,255,0.2)
+
   &.path
     .overlay
-      position absolute
-      width inherit
-      height inherit
-      border-radius 5px
       background-color rgba(255,0,0,0.2)
       cursor s-resize
