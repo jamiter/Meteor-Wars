@@ -14,6 +14,7 @@ Template.GamePage.helpers
 
     options =
       sort:
+        createdAt: -1
         finishedAt: 1
         startedAt: 1
 
