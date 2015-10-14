@@ -9,6 +9,22 @@ Template.GamePage.helpers
 
     Games.findOne _id: gameId
 
+  pendingRounds: ->
+    gameId = FlowRouter.getParam 'gameId'
+
+    options =
+      sort:
+        createdAt: -1
+        finishedAt: 1
+        startedAt: 1
+
+    Rounds.find
+      gameId: gameId
+      finishedAt: null
+      startedAt: null
+    ,
+      options
+
   activeRounds: ->
     gameId = FlowRouter.getParam 'gameId'
 
@@ -21,6 +37,7 @@ Template.GamePage.helpers
     Rounds.find
       gameId: gameId
       finishedAt: null
+      startedAt: $ne: null
     ,
       options
 
