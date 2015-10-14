@@ -9,11 +9,6 @@ class Turn extends Model
   start: ->
     @update $set: startedAt: new Date
 
-    player = @findPlayer()
-
-    if player?.isAi()
-      player.aiPlay()
-
   finish: ->
     Units.update
       playerId: @playerId
