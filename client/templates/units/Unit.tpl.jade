@@ -2,12 +2,12 @@
   .image(style=imageStyle)
     +Template.dynamic(template=unitTemplate data=unitData)
   .corner-icons
-    if attacked
+    if unit.attacked
       i.fa.fa-crosshairs
-    if moved
+    if unit.moved
       i.fa.fa-lock
-  unless atMaxStrength
-    .strength #{getStrength}/#{maxStrength}
-  unless atMaxHealth  
+  unless unit.atMaxStrength
+    .strength #{unit.getStrength}/#{unit.maxStrength}
+  unless unit.atMaxHealth  
     .health-bar
       .inner(style="width: {{healthBarWidth}}%;")

@@ -1,4 +1,3 @@
-finder = new PF.AStarFinder(allowDiagonal: false)
 gridTileSize = 80
 
 findRound = ->
@@ -73,6 +72,9 @@ Template.RoundMap.helpers
     findRound()?.hasFinished()
 
   grid: ->
+    Template.instance().grid
+
+  tiles: ->
     Template.instance().grid.nodes
 
   path: ->
@@ -119,7 +121,7 @@ Template.RoundMap.events
   'click .next-turn': ->
     @nextTurn()
 
-  'mouseover .grid-item': ->
+  'mouseover .tile': ->
     return unless unitId = Session.get 'selectedUnitId'
     return unless roundId = FlowRouter.getParam 'roundId'
 
@@ -127,27 +129,19 @@ Template.RoundMap.events
 
     return unless unit?.canMove()
 
-    units = Units.find
-      roundId: roundId
-      unitId: $ne: unitId
-
-    walkGrid = Template.instance().grid.clone()
-
-    units.forEach (unit) ->
-      walkGrid.setWalkableAt unit.x, unit.y, false
-
-    path = finder.findPath (unit.x or 0), (unit.y or 0), @x, @y, walkGrid
+    path = unit.getPathToPoint Template.instance().grid, this
 
     if path.length > (unit.moverange or 5)
       Template.instance().path.set []
     else
       Template.instance().path.set path
 
-  'click .grid-item': ->
+  'click .tile': ->
     return unless unitId = Session.get 'selectedUnitId'
 
     unit = Units.findOne unitId
 
     path = Template.instance().path
 
-    unit?.moveAlongPath(path.get())?.then -> path.set([])
+    if unit.setToEndOfPath path.get()
+      path.set []

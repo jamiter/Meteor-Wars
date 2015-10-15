@@ -242,43 +242,34 @@ class Unit extends Model
 
     Units.findOne query, options
 
-  moveAlongPath: (path) ->
+  getBlockingPoints: ->
+    Units.find
+      roundId: @roundId
+      _id: $ne: @_id
+
+  getPathToPoint: (grid, point, options = {}) ->
+    blockingPoints = @getBlockingPoints()
+
+    walkGrid = grid.clone()
+
+    blockingPoints.forEach (point) ->
+      walkGrid.setWalkableAt point.x, point.y, false
+
+    if options.reverse
+      finder.findPath point.x, point.y, @x, @y, walkGrid
+    else
+      finder.findPath @x, @y, point.x, point.y, walkGrid
+
+  setToEndOfPath: (path = []) ->
     return unless @canMove()
-    # return unless path.length > 1
+    return unless path.length
 
-    unit = this
+    point = path[path.length-1]
 
-    createWaitPromite = (i) ->
-      point = path[i]
-
-      if not point
-        new Promise (resolve) -> resolve()
-      else
-        new Promise (resolve, reject) ->
-          timeout = if i is 0 then 0 else 200
-
-          update =
-            x: point[0]
-            y: point[1]
-
-          if previousPoint = path[i-1]
-            if previousPoint[0] > point[0]
-              update.angle = -90
-            else if previousPoint[0] < point[0]
-              update.angle = 90
-            else if previousPoint[1] > point[1]
-              update.angle = 0
-            else if previousPoint[1] < point[1]
-              update.angle = 180
-
-          Meteor.setTimeout ->
-            unit.set update
-
-            createWaitPromite(i+1).then resolve
-          , timeout
-
-    createWaitPromite(0).then =>
-      @set moved: true
+    @set
+      x: point[0]
+      y: point[1]
+      moved: true
 
   runAi: ->
     round = @findRound()
@@ -295,12 +286,19 @@ class Unit extends Model
     targetTile = tiles[index]
 
     if targetTile
-      path = finder.findPath @x, @y, targetTile[0], targetTile[1], grid.clone()
+      path = @getPathToPoint grid,
+        x: targetTile[0]
+        y: targetTile[1]
     else
       path = []
 
-    @moveAlongPath(path).then =>
-      if not target and target = @getSingleTarget()
-        @attack target
+    @setToEndOfPath path
 
-      true
+    new Promise (resolve) =>
+      Meteor.setTimeout =>
+        if not target and target = @getSingleTarget()
+          @attack target
+
+        resolve()
+
+      , 1000

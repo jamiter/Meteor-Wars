@@ -39,13 +39,13 @@ else
         each immutables
           +Immutable
         
-        each grid
+        each tiles
           each this
-            .grid-item(class=gridClass, data-x=x, data-y=y)
+            .tile(class=gridClass, data-x=x, data-y=y)
               .overlay
               
         each units
-          +Unit
+          +Unit(unit=this grid=grid)
 
 #surrenderModal.modal
   .modal-content
