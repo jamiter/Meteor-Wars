@@ -146,7 +146,8 @@ class Unit extends Model
 
     unit.takeDamage @getDamage(unit)
 
-    @takeDamage unit.getDamage this
+    if unit.health >= 0
+      @takeDamage unit.getDamage this
 
   takeDamage: (damage) ->
     health = Math.max(0, @getHealth() - damage)
