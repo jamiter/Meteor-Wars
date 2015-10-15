@@ -108,16 +108,6 @@ Template.RoundMap.events
 
     Meteor.call 'round/surrender', roundId
 
-  'click .add-unit': ->
-    x = Math.floor Math.random() * @mapMatrix[0]
-    y = Math.floor Math.random() * @mapMatrix[1]
-
-    if not Units.findOne(x: x, y: y)
-      @addUnit
-        x: x
-        y: y
-        angle: Math.floor Math.random() * 360
-
   'click .next-turn': ->
     @nextTurn()
 
@@ -129,17 +119,18 @@ Template.RoundMap.events
 
     return unless unit?.canMove()
 
-    path = unit.getPathToPoint Template.instance().grid, this
+    point = [@x, @y]
 
-    if path.length > (unit.moverange or 5)
+    path = unit.getPathToPoint Template.instance().grid, point
+
+    if path.length > (unit.moverange + 1)
       Template.instance().path.set []
     else
       Template.instance().path.set path
 
   'click .tile': ->
     return unless unitId = Session.get 'selectedUnitId'
-
-    unit = Units.findOne unitId
+    return unless unit = Units.findOne unitId
 
     path = Template.instance().path
 

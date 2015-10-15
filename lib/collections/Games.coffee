@@ -17,7 +17,9 @@ GameSchema = new SimpleSchema
         new Date
   name:
     type: String
-  playersRequirement:
+  minPlayers:
+    type: Number
+  maxPlayers:
     type: Number
   maps:
     type: [Object]
@@ -42,6 +44,5 @@ class Game extends Model
   newRound: ->
     roundId = Rounds.insert
       gameId: @_id
-      # dir: 1
 
     Rounds.findOne roundId

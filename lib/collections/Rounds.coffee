@@ -11,7 +11,6 @@ class Round extends Model
 
   @ERROR_NOT_ENOUGH_PLAYERS = "Not enought players to start the round"
   @ERROR_MAXIMUM_PLAYERS = "This round is already at its maximum of players"
-  @ERROR_NO_UNITS = "There are no units yet to deal"
   @ERROR_ALREADY_STARTED = "Users cannot be added after initialization of the round"
   @ERROR_ALREADY_FINISHED = "This round is already over"
   @ERROR_PLAYER_ALREADY_JOINED = "The player is already in this round"
@@ -122,7 +121,7 @@ class Round extends Model
       nextPlayer or findFirst()
 
   maxPlayersReached: ->
-    @findPlayers().count() >= @findGame().playersRequirement
+    @findPlayers().count() >= @findGame().maxPlayers
 
   canJoin: (userId) ->
     return false if @hasStarted()
@@ -185,13 +184,6 @@ class Round extends Model
     else
       # TODO: randomize player rank
 
-      # aiPlayerCount = @constructor.MINIMUM_PLAYERS - @countPlayers()
-      #
-      # if aiPlayerCount
-      #   for i in [1..aiPlayerCount]
-      #     @addPlayer
-      #       name: "Computer #{i}"
-
       @update $set: startedAt: Date.now()
 
       @nextTurn()
@@ -200,7 +192,7 @@ class Round extends Model
     if userId and @createdBy isnt userId
       return false
 
-    @countPlayers() >= @findGame().playersRequirement
+    @countPlayers() >= @findGame().maxPlayers
 
   findGame: ->
     Games.findOne @gameId

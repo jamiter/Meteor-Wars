@@ -50,10 +50,10 @@ Template.RoundSettings.events
 
     selectedMap.objectMapping.forEach (object) ->
       unit =
-        x: object.x
-        y: object.y
+        loc: object.loc
         angle: object.angle
         playerIndex: object.playerIndex
+
       if object.unitObjectType
         for attr of object.unitObjectType
           if attr is 'maxHealth'
@@ -67,7 +67,7 @@ Template.RoundSettings.events
           unit[attr] = object.immutableObjectType[attr]
 
         delete unit.playerIndex
-        unit['roundId'] = roundId
+        unit.roundId = roundId
         Immutables.insert unit
 
     round.start()

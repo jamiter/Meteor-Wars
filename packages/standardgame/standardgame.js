@@ -6,12 +6,11 @@ Meteor.startup(function () {
             type: "infantry",
             templateName: "UnitRifleman",
             maxHealth: 100,
-            maxStrength: 10,
             minShootingrange: 0,
             maxShootingrange: 1,
-            moverange: 5,
+            moverange: 3,
             damage: {
-                infantry: 50,
+                infantry: 60,
                 armor: 10,
                 air: 0
             }
@@ -21,10 +20,9 @@ Meteor.startup(function () {
             type: "armor",
             templateName: "UnitTank",
             maxHealth: 250,
-            maxStrength: 4,
             minShootingrange: 0,
             maxShootingrange: 5,
-            moverange: 6,
+            moverange: 4,
             damage: {
                 infantry: 70,
                 armor: 80,
@@ -36,10 +34,9 @@ Meteor.startup(function () {
             type: "infantry",
             templateName: "UnitBazooka",
             maxHealth: 100,
-            maxStrength: 8,
             minShootingrange: 0,
             maxShootingrange: 3,
-            moverange: 4,
+            moverange: 2,
             damage: {
                 infantry: 20,
                 armor: 100,
@@ -51,12 +48,11 @@ Meteor.startup(function () {
             type: "armor",
             templateName: "UnitJeep",
             maxHealth: 150,
-            maxStrength: 8,
             minShootingrange: 0,
             maxShootingrange: 2,
-            moverange: 8,
+            moverange: 5,
             damage: {
-                infantry: 100,
+                infantry: 80,
                 armor: 20,
                 air: 20
             }
@@ -88,42 +84,36 @@ Meteor.startup(function () {
                 {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
-                    x: 2,
-                    y: 1,
-                    angle: 90
+                    loc: [2, 1],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
-                    x: 4,
-                    y: 3,
+                    loc: [4, 3],
                     angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
-                    x: 4,
-                    y: 2,
-                    angle: 270
+                    loc: [4, 2],
+                    angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.city,
-                    x: 4,
-                    y: 1,
+                    loc: [4, 1],
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
-                    x: 0,
-                    y: 3,
-                    angle: 90
+                    loc: [0, 3],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 0,
-                    x: 2,
-                    y: 4,
-                    angle: 270
+                    loc: [2, 4],
+                    angle: 180
                 }]
         },
         {
@@ -133,344 +123,301 @@ Meteor.startup(function () {
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 0,
-                    x: 6,
-                    y: 10,
-                    angle: 90
+                    loc: [6, 10],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 0,
-                    x: 8,
-                    y: 11,
-                    angle: 90
+                    loc: [8, 11],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 0,
-                    x: 9,
-                    y: 4,
-                    angle: 90
+                    loc: [9, 4],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 0,
-                    x: 2,
-                    y: 4,
-                    angle: 90
+                    loc: [2, 4],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 1,
-                    x: 11,
-                    y: 6,
-                    angle: 270
+                    loc: [11, 6],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 1,
-                    x: 16,
-                    y: 7,
-                    angle: 270
+                    loc: [16, 7],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 1,
-                    x: 18,
-                    y: 3,
-                    angle: 270
+                    loc: [18, 3],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.jeep,
                     playerIndex: 1,
-                    x: 17,
-                    y: 2,
-                    angle: 270
-                },
-                {
-                    immutableObjectType: immutableObjectType.city,
-                    x: 7,
-                    y: 6,
-                    angle: 270
-                },
-                {
-                    immutableObjectType: immutableObjectType.city,
-                    x: 9,
-                    y: 3,
+                    loc: [17, 2],
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.city,
-                    x: 12,
-                    y: 9,
-                    angle: 90
-                },
-                {
-                    immutableObjectType: immutableObjectType.city,
-                    x: 9,
-                    y: 9,
-                    angle: 270
-                },
-                {
-                    immutableObjectType: immutableObjectType.city,
-                    x: 13,
-                    y: 4,
+                    loc: [7, 6],
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.city,
-                    x: 11,
-                    y: 7,
-                    angle: 90
+                    loc: [9, 3],
+                    angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.city,
-                    x: 11,
-                    y: 8,
-                    angle: 270
+                    loc: [12, 9],
+                    angle: 0
                 },
                 {
-                    immutableObjectType: immutableObjectType.tree,
-                    x: 8,
-                    y: 4,
+                    immutableObjectType: immutableObjectType.city,
+                    loc: [9, 9],
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    loc: [13, 4],
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    loc: [11, 7],
+                    angle: 0
+                },
+                {
+                    immutableObjectType: immutableObjectType.city,
+                    loc: [11, 8],
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
-                    x: 18,
-                    y: 8,
-                    angle: 90
-                },
-                {
-                    immutableObjectType: immutableObjectType.tree,
-                    x: 3,
-                    y: 6,
-                    angle: 270
-                },
-                {
-                    immutableObjectType: immutableObjectType.tree,
-                    x: 14,
-                    y: 4,
+                    loc: [8, 4],
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
-                    x: 19,
-                    y: 8,
-                    angle: 90
+                    loc: [18, 8],
+                    angle: 0
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
-                    x: 6,
-                    y: 10,
-                    angle: 270
-                },
-                {
-                    immutableObjectType: immutableObjectType.tree,
-                    x: 9,
-                    y: 5,
+                    loc: [3, 6],
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
-                    x: 5,
-                    y: 8,
-                    angle: 90
-                },
-                {
-                    immutableObjectType: immutableObjectType.tree,
-                    x: 18,
-                    y: 5,
+                    loc: [14, 4],
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
-                    x: 19,
-                    y: 9,
-                    angle: 270
+                    loc: [19, 8],
+                    angle: 0
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
-                    x: 17,
-                    y: 7,
+                    loc: [6, 0],
                     angle: 180
                 },
                 {
                     immutableObjectType: immutableObjectType.tree,
-                    x: 13,
-                    y: 9,
-                    angle: 90
+                    loc: [9, 5],
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    loc: [5, 8],
+                    angle: 0
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    loc: [18, 5],
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    loc: [19, 9],
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    loc: [17, 7],
+                    angle: 180
+                },
+                {
+                    immutableObjectType: immutableObjectType.tree,
+                    loc: [13, 9],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.soldier,
                     playerIndex: 0,
-                    x: 4,
-                    y: 3,
-                    angle: 90
+                    loc: [4, 3],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 0,
-                    x: 5,
-                    y: 6,
-                    angle: 90
+                    loc: [5, 6],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
-                    x: 8,
-                    y: 7,
-                    angle: 90
-                },{
+                    loc: [8, 7],
+                    angle: 0
+                },
+                {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
-                    x: 3,
-                    y: 2,
-                    angle: 90
+                    loc: [3, 2],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 0,
-                    x: 7,
-                    y: 3,
-                    angle: 90
+                    loc: [7, 3],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
-                    x: 8,
-                    y: 5,
-                    angle: 90
-                },{
+                    loc: [8, 5],
+                    angle: 0
+                },
+                {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
-                    x: 11,
-                    y: 7,
-                    angle: 270
+                    loc: [11, 7],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
-                    x: 17,
-                    y: 5,
-                    angle: 270
+                    loc: [17, 5],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
-                    x: 13,
-                    y: 4,
-                    angle: 270
-                },{
+                    loc: [13, 4],
+                    angle: 180
+                },
+                {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
-                    x: 19,
-                    y: 5,
-                    angle: 270
+                    loc: [19, 5],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
-                    x: 16,
-                    y: 2,
-                    angle: 270
+                    loc: [16, 2],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
-                    x: 14,
-                    y: 6,
-                    angle: 90
-                },{
+                    loc: [14, 6],
+                    angle: 180
+                },
+                {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
-                    x: 2,
-                    y: 1,
-                    angle: 90
+                    loc: [2, 1],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 0,
-                    x: 3,
-                    y: 3,
-                    angle: 90
+                    loc: [3, 3],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
-                    x: 6,
-                    y: 7,
-                    angle: 90
-                },{
+                    loc: [6, 7],
+                    angle: 0
+                },
+                {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 0,
-                    x: 9,
-                    y: 4,
-                    angle: 90
+                    loc: [9, 4],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 0,
-                    x: 4,
-                    y: 3,
-                    angle: 90
+                    loc: [4, 3],
+                    angle: 0
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 0,
-                    x: 1,
-                    y: 6,
-                    angle: 90
-                },{
+                    loc: [1, 6],
+                    angle: 0
+                },
+                {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
-                    x: 13,
-                    y: 3,
-                    angle: 270
+                    loc: [13, 3],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
-                    x: 18,
-                    y: 10,
-                    angle: 270
+                    loc: [18, 0],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
-                    x: 16,
-                    y: 4,
-                    angle: 270
-                },{
+                    loc: [16, 4],
+                    angle: 180
+                },
+                {
                     unitObjectType: unitObjectType.rifleman,
                     playerIndex: 1,
-                    x: 11,
-                    y: 5,
-                    angle: 270
+                    loc: [11, 5],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.tank,
                     playerIndex: 1,
-                    x: 13,
-                    y: 2,
-                    angle: 270
+                    loc: [13, 2],
+                    angle: 180
                 },
                 {
                     unitObjectType: unitObjectType.bazooka,
                     playerIndex: 1,
-                    x: 17,
-                    y: 6,
-                    angle: 270
+                    loc: [17, 6],
+                    angle: 180
                 }]
         }
     ];
 
-    var game = {
-        name: 'Standard 1 vs 1 Game',
-        playersRequirement: 2,
+    var gameData = {
+        name: "Standard 1 vs 1 Game",
+        minPlayers: 2,
+        maxPlayers: 2,
         maps: maps
     };
-    var findGame = Games.findOne({name: game.name});
-    if (!findGame) {
-        Games.insert(game);
+    var game = Games.findOne({name: gameData.name});
+    if (!game) {
+        Games.insert(gameData);
     }
 });

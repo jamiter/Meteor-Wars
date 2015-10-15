@@ -5,22 +5,22 @@ finder = new PF.AStarFinder(allowDiagonal: false)
     new Unit data
 
 UnitSchema = new SimpleSchema
+  gameId:
+    type: String
+  playerId:
+    type: String
   roundId:
     type: String
-  x:
-    type: Number
-  y:
-    type: Number
   angle:
     type: Number
-    min: 0
+    min: -360
     max: 360
   name:
     type: String
   type:
     type: String
-  image:
-    type: String
+  maxHealth:
+    type: Number
   health:
     type: Number
   minShootingrange:
@@ -38,12 +38,17 @@ UnitSchema = new SimpleSchema
   attacked:
     type: Boolean
     optional: true
+  loc:
+    type: [Number]
+    index: '2d'
+  templateName:
+    type: String
 
 @Units.after.remove (userId, doc) ->
   unit = new Unit doc
   unit.findRound()?._checkWin()
 
-# Units.attachSchema UnitSchema
+Units.attachSchema UnitSchema
 
 class Unit extends Model
 
@@ -59,7 +64,7 @@ class Unit extends Model
     @getHealth() >= @getMaxHealth()
 
   getMaxStrength: ->
-    @maxStrength or 10
+    10
 
   atMaxStrength: ->
     @getMaxStrength() is @getStrength()
@@ -95,35 +100,40 @@ class Unit extends Model
   findUnitType: (optons) ->
     UnitTypes.findOne @unitTypeId, options
 
-  findTargets: ->
+  findTargetsUnits: ->
     return if @hasAttacked
 
-    Units.find
+    query = @getTargetQuery()
+
+    options =
+      $sort: health: 1
+
+    Units.find query, options
+
+  getTargetQuery: ->
+    query =
       _id: $ne: @_id
       playerId: $ne: @playerId
-      $or: [
-        y: @y
-        $and: [
-          x: $lte: @x + 1
-        ,
-          x: $gte: @x - 1
-        ]
-      ,
-        x: @x
-        $and: [
-          y: $lte: @y + 1
-        ,
-          y: $gte: @y - 1
-        ]
-      ]
+      roundId: @roundId
+      loc:
+        $near: @loc
+        $maxDistance: 1
+
+  findSingleTargetUnit: ->
+    query = @getTargetQuery()
+
+    options =
+      $sort: health: 1
+
+    Units.findOne query, options
 
   canTarget: (unit = {}) ->
     return false if not @canAttack()
     return false if unit.playerId is @playerId
     return false if not @getDamage unit
 
-    (unit.x is @x and unit.y >= @y-1 and unit.y <= @y+1) or
-    (unit.y is @y and unit.x >= @x-1 and unit.x <= @x+1)
+    (unit.loc[0] is @loc[0] and unit.loc[1] >= @loc[1]-1 and unit.loc[1] <= @loc[1]+1) or
+    (unit.loc[1] is @loc[1] and unit.loc[0] >= @loc[0]-1 and unit.loc[0] <= @loc[0]+1)
 
   canMove: ->
     not @moved and not @hasAttacked and @canDoAction()
@@ -132,17 +142,17 @@ class Unit extends Model
     not @attacked and @canDoAction()
 
   getAngleToPoint: (point) ->
-    Math.atan2(point.y - @y, point.x - @x) * 180 / Math.PI;
+    Math.atan2(point[1] - @loc[1], point[0] - @loc[0]) * 180 / Math.PI
 
   attack: (unit = {}) ->
     return unless @canTarget unit
 
     @set
       attacked: true
-      angle: @getAngleToPoint unit
+      angle: @getAngleToPoint unit.loc
 
     unit.set
-      angle: unit.getAngleToPoint this
+      angle: unit.getAngleToPoint @loc
 
     unit.takeDamage @getDamage(unit)
 
@@ -173,10 +183,10 @@ class Unit extends Model
     else if not @moverange or @moverange < 1
       # Do nothing
     else
-      leftX = Math.max 0, @x - @moverange
-      topY = Math.max 0, @y - @moverange
-      rightX = Math.min grid.width - 1, @x + @moverange
-      bottomY = Math.min grid.height - 1, @y + @moverange
+      leftX = Math.max 0, @loc[0] - @moverange
+      topY = Math.max 0, @loc[1] - @moverange
+      rightX = Math.min grid.width - 1, @loc[0] + @moverange
+      bottomY = Math.min grid.height - 1, @loc[1] + @moverange
 
       units = Units.find
         roundId: @roundId
@@ -185,16 +195,16 @@ class Unit extends Model
       walkGrid = grid.clone()
 
       units.forEach (unit) ->
-        walkGrid.setWalkableAt unit.x, unit.y, false
+        walkGrid.setWalkableAt unit.loc[0], unit.loc[1], false
 
       for x in [leftX..rightX]
         for y in [topY..bottomY]
-          # Do mark the units position as walkable
-          continue if x is @x and y is @y
+          # Don't mark the units position as walkable
+          continue if x is @loc[0] and y is @loc[1]
 
-          path = finder.findPath @x, @y, x, y, walkGrid.clone()
+          path = finder.findPath @loc[0], @loc[1], x, y, walkGrid.clone()
 
-          if path.length and path.length <= @moverange
+          if path.length and path.length <= (@moverange + 1)
             if options.indexed
               indexedTiles["#{x}:#{y}"] = 1
             else
@@ -205,60 +215,23 @@ class Unit extends Model
     else
       tiles
 
-  getTargetQuery: ->
-    query =
-      _id: $ne: @_id
-      playerId: $ne: @playerId
-      roundId: @roundId
-      $or: [
-        x: @x
-        $and: [
-          y: $gte: @y-1
-        ,
-          y: $lte: @y+1
-        ]
-      ,
-        y: @y
-        $and: [
-          x: $gte: @x-1
-        ,
-          x: $lte: @x+1
-        ]
-      ]
-
-  getTargets: ->
-    query = @getTargetQuery()
-
-    options =
-      $sort: health: 1
-
-    Units.find query, options
-
-  getSingleTarget: ->
-    query = @getTargetQuery()
-
-    options =
-      $sort: health: 1
-
-    Units.findOne query, options
-
-  getBlockingPoints: ->
+  getBlockingUnits: ->
     Units.find
       roundId: @roundId
       _id: $ne: @_id
 
   getPathToPoint: (grid, point, options = {}) ->
-    blockingPoints = @getBlockingPoints()
+    blockingUnits = @getBlockingUnits()
 
     walkGrid = grid.clone()
 
-    blockingPoints.forEach (point) ->
-      walkGrid.setWalkableAt point.x, point.y, false
+    blockingUnits.forEach (unit) ->
+      walkGrid.setWalkableAt unit.loc[0], unit.loc[1], false
 
     if options.reverse
-      finder.findPath point.x, point.y, @x, @y, walkGrid
+      finder.findPath point[0], point[1], @loc[0], @loc[1], walkGrid
     else
-      finder.findPath @x, @y, point.x, point.y, walkGrid
+      finder.findPath @loc[0], @loc[1], point[0], point[1], walkGrid
 
   setToEndOfPath: (path = []) ->
     return unless @canMove()
@@ -267,14 +240,13 @@ class Unit extends Model
     point = path[path.length-1]
 
     @set
-      x: point[0]
-      y: point[1]
+      loc: point
       moved: true
 
   runAi: ->
     round = @findRound()
 
-    if target = @getSingleTarget()
+    if target = @findSingleTargetUnit()
       @attack target
 
     grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
@@ -286,9 +258,7 @@ class Unit extends Model
     targetTile = tiles[index]
 
     if targetTile
-      path = @getPathToPoint grid,
-        x: targetTile[0]
-        y: targetTile[1]
+      path = @getPathToPoint grid, targetTile
     else
       path = []
 
@@ -296,7 +266,7 @@ class Unit extends Model
 
     new Promise (resolve) =>
       Meteor.setTimeout =>
-        if not target and target = @getSingleTarget()
+        if not target and target = @findSingleTargetUnit()
           @attack target
 
         resolve()

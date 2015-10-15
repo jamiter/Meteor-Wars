@@ -5,7 +5,7 @@ targetedUnitIdName = 'targetedUnitId'
 getAngleBetweenPoints = (a, b) ->
   Math.atan2(a[1] - b[1], a[0] - b[0]) * 180 / Math.PI;
 
-walkPath = (path, xVar, yVar, angleVar) ->
+walkPath = (path, locVar, angleVar) ->
   createWaitPromite = (i) ->
     point = path[i]
 
@@ -15,18 +15,12 @@ walkPath = (path, xVar, yVar, angleVar) ->
       new Promise (resolve, reject) ->
         timeout = if i is 0 then 0 else 200
 
-        update =
-          x: point[0]
-          y: point[1]
-
-        if previousPoint = path[i-1]
-          update.angle = getAngleBetweenPoints point, previousPoint
-
         Meteor.setTimeout ->
-          xVar.set update.x
-          yVar.set update.y
-          if update.angle?
-            angleVar.set update.angle
+          locVar.set point
+
+          if previousPoint = path[i-1]
+            angle = getAngleBetweenPoints point, previousPoint
+            angleVar.set angle
 
           createWaitPromite(i+1).then resolve
         , timeout
@@ -34,8 +28,7 @@ walkPath = (path, xVar, yVar, angleVar) ->
   createWaitPromite(0)
 
 Template.Unit.onCreated ->
-  @currentX = new ReactiveVar @data.unit.x
-  @currentY = new ReactiveVar @data.unit.y
+  @currentLocation = new ReactiveVar @data.unit.loc or [0,0]
   @currentAngle = new ReactiveVar(@data.unit.angle or 0)
 
   @moving = new ReactiveVar false
@@ -48,24 +41,21 @@ Template.Unit.onCreated ->
         @currentAngle.set unit.angle
 
     Tracker.nonreactive =>
-      if unit.x isnt @currentX.get() or unit.y isnt @currentY.get()
+      if unit.loc?.toString() isnt @currentLocation.get().toString()
         @moving.set true
 
-        path = unit.getPathToPoint @data.grid,
-          x: @currentX.get()
-          y: @currentY.get()
-        ,
+        path = unit.getPathToPoint @data.grid, @currentLocation.get(),
           reverse: true
 
         if path.length
-          walkPath path, @currentX, @currentY, @currentAngle
+          walkPath path, @currentLocation, @currentAngle
           .then =>
             @moving.set false
 
 Template.Unit.helpers
   unitStyle: ->
-    "left: #{Template.instance().currentX.get() * gridItemSize}px;
-    top: #{Template.instance().currentY.get() * gridItemSize}px;"
+    "left: #{Template.instance().currentLocation.get()[0] * gridItemSize}px;
+    top: #{Template.instance().currentLocation.get()[1] * gridItemSize}px;"
 
   imageStyle: ->
     # The extra 90 is to compensate for the fact that the images are pointing
@@ -99,7 +89,7 @@ Template.Unit.helpers
     @unit._id is Session.get selectedUnitIdName
 
   canAttack: ->
-    @unit.findTargets()?.count()
+    @unit.findTargetUnits()?.count()
 
   healthBarWidth: ->
     Math.ceil(@unit.getStrengthDamageModifier() * 100)
