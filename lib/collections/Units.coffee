@@ -230,7 +230,7 @@ class Unit extends Model
     query = @getTargetQuery()
 
     options =
-      $sort: health: -1
+      $sort: health: 1
 
     Units.find query, options
 
@@ -238,7 +238,7 @@ class Unit extends Model
     query = @getTargetQuery()
 
     options =
-      $sort: health: -1
+      $sort: health: 1
 
     Units.findOne query, options
 
