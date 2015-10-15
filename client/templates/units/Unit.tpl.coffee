@@ -2,6 +2,9 @@ gridItemSize = 80
 selectedUnitIdName = 'selectedUnitId'
 targetedUnitIdName = 'targetedUnitId'
 
+getAngleBetweenPoints = (a, b) ->
+  Math.atan2(a[1] - b[1], a[0] - b[0]) * 180 / Math.PI;
+
 walkPath = (path, xVar, yVar, angleVar) ->
   createWaitPromite = (i) ->
     point = path[i]
@@ -17,14 +20,7 @@ walkPath = (path, xVar, yVar, angleVar) ->
           y: point[1]
 
         if previousPoint = path[i-1]
-          if previousPoint[0] > point[0]
-            update.angle = -90
-          else if previousPoint[0] < point[0]
-            update.angle = 90
-          else if previousPoint[1] > point[1]
-            update.angle = 0
-          else if previousPoint[1] < point[1]
-            update.angle = 180
+          update.angle = getAngleBetweenPoints point, previousPoint
 
         Meteor.setTimeout ->
           xVar.set update.x
@@ -72,7 +68,9 @@ Template.Unit.helpers
     top: #{Template.instance().currentY.get() * gridItemSize}px;"
 
   imageStyle: ->
-    "transform: rotate(#{Template.instance().currentAngle.get()}deg);"
+    # The extra 90 is to compensate for the fact that the images are pointing
+    # north, instead of east (which would be 0 degrees)
+    "transform: rotate(#{90 + Template.instance().currentAngle.get()}deg);"
 
   unitTemplate: ->
     @unit.templateName

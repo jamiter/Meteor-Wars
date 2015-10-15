@@ -132,7 +132,7 @@ class Unit extends Model
     not @attacked and @canDoAction()
 
   getAngleToPoint: (point) ->
-    90 + Math.atan2(point.y - @y, point.x - @x) * 180 / Math.PI;
+    Math.atan2(point.y - @y, point.x - @x) * 180 / Math.PI;
 
   attack: (unit = {}) ->
     return unless @canTarget unit
