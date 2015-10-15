@@ -43,14 +43,20 @@ class Player extends Model
   runAi: ->
     round = @findRound()
 
-    units = Units.find
+    units = (Units.find
       playerId: @_id
       roundId: @roundId
       moved: null
+    ).fetch()
 
-    unitPromises = units.map (unit) ->
-      unit.runAi()
+    createUnitAiPromise = (i) ->
+      unit = units[i]
 
-    Promise.all unitPromises
-    .then ->
+      if not unit
+        new Promise (resolve) -> resolve()
+      else
+        unit.runAi().then ->
+          createUnitAiPromise(i+1)
+
+    createUnitAiPromise(0).then ->
       round.nextTurn()

@@ -214,7 +214,7 @@ class Unit extends Model
       point = path[i]
 
       if not point
-        new Promise (resolve, reject) -> resolve()
+        new Promise (resolve) -> resolve()
       else
         new Promise (resolve, reject) ->
           timeout = if i is 0 then 0 else 200
