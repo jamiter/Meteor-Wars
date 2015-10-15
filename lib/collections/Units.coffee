@@ -253,7 +253,7 @@ class Unit extends Model
       @attack target
     else
       query = @getTargetQuery()
-      query.loc.$maxDistance = @moverange
+      query.loc.$maxDistance = @moverange + 1
 
       options =
         fields: loc: 1
