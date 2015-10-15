@@ -50,6 +50,9 @@ UnitSchema = new SimpleSchema
 
 Units.attachSchema UnitSchema
 
+getDistanceBetweenPoints = (a, b) ->
+  Math.sqrt( Math.pow((a[0]-b[0]), 2) + Math.pow((a[1]-b[1]), 2) )
+
 class Unit extends Model
 
   @_collection: Units
@@ -100,7 +103,7 @@ class Unit extends Model
   findUnitType: (optons) ->
     UnitTypes.findOne @unitTypeId, options
 
-  findTargetsUnits: ->
+  findTargetUnits: ->
     return if @hasAttacked
 
     query = @getTargetQuery()
@@ -233,7 +236,7 @@ class Unit extends Model
     else
       finder.findPath @loc[0], @loc[1], point[0], point[1], walkGrid
 
-  setToEndOfPath: (path = []) ->
+  moveToEndOfPath: (path = []) ->
     return unless @canMove()
     return unless path.length
 
@@ -248,12 +251,27 @@ class Unit extends Model
 
     if target = @findSingleTargetUnit()
       @attack target
+    else
+      query = @getTargetQuery()
+      query.loc.$maxDistance = @moverange
+
+      options =
+        fields: loc: 1
+        $sort: health: 1
+
+      closestLocation = Units.find(query, options).fetch()[0]?.loc
 
     grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
 
     tiles = @getReachableTiles grid
 
-    index = Math.floor Math.random() * tiles.length
+    if not closestLocation
+      # Super intellegence: No enemy close? Move randomly!
+      index = Math.floor Math.random() * tiles.length
+    else
+      tiles.some (tile, i) ->
+        if 1 >= getDistanceBetweenPoints tile, closestLocation
+          index = i
 
     targetTile = tiles[index]
 
@@ -262,7 +280,7 @@ class Unit extends Model
     else
       path = []
 
-    @setToEndOfPath path
+    @moveToEndOfPath path
 
     new Promise (resolve) =>
       Meteor.setTimeout =>

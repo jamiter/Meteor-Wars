@@ -134,5 +134,5 @@ Template.RoundMap.events
 
     path = Template.instance().path
 
-    if unit.setToEndOfPath path.get()
+    if unit.moveToEndOfPath path.get()
       path.set []
