@@ -205,6 +205,43 @@ class Unit extends Model
     else
       tiles
 
+  getTargetQuery: ->
+    query =
+      _id: $ne: @_id
+      playerId: $ne: @playerId
+      roundId: @roundId
+      $or: [
+        x: @x
+        $and: [
+          y: $gte: @y-1
+        ,
+          y: $lte: @y+1
+        ]
+      ,
+        y: @y
+        $and: [
+          x: $gte: @x-1
+        ,
+          x: $lte: @x+1
+        ]
+      ]
+
+  getTargets: ->
+    query = @getTargetQuery()
+
+    options =
+      $sort: health: -1
+
+    Units.find query, options
+
+  getSingleTarget: ->
+    query = @getTargetQuery()
+
+    options =
+      $sort: health: -1
+
+    Units.findOne query, options
+
   moveAlongPath: (path) ->
     return unless @canMove()
     # return unless path.length > 1
@@ -246,17 +283,24 @@ class Unit extends Model
   runAi: ->
     round = @findRound()
 
+    if target = @getSingleTarget()
+      @attack target
+
     grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
 
     tiles = @getReachableTiles grid
 
     index = Math.floor Math.random() * tiles.length
 
-    target = tiles[index]
+    targetTile = tiles[index]
 
-    if target
-      path = finder.findPath @x, @y, target[0], target[1], grid.clone()
+    if targetTile
+      path = finder.findPath @x, @y, targetTile[0], targetTile[1], grid.clone()
     else
       path = []
 
-    @moveAlongPath(path)
+    @moveAlongPath(path).then =>
+      if not target and target = @getSingleTarget()
+        @attack target
+
+      true
