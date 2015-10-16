@@ -21,3 +21,26 @@ body
 .surrender
   .fa-flag
     color white
+
+@keyframes explode
+  from, to
+    opacity 0
+    transform rotate(-15deg) scale(1)
+
+  5%
+    opacity .1
+
+  50%
+    opacity 1
+    transform rotate(-45deg) scale(1.3)
+
+  80%
+    opacity 0
+
+.explosion
+  color red
+  position absolute
+  z-index 100
+  transition all .3
+  animation explode .9s infinite
+  margin 25px 23px

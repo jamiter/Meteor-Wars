@@ -1,4 +1,4 @@
-gridItemSize = 80
+tileSize = 80
 selectedUnitIdName = 'selectedUnitId'
 targetedUnitIdName = 'targetedUnitId'
 
@@ -52,10 +52,15 @@ Template.Unit.onCreated ->
           .then =>
             @moving.set false
 
+Template.Unit.onDestroyed ->
+  location = @currentLocation.get()
+
+  Blaze.renderWithData Template.Explosion, {loc: location}, $('.map')[0]
+
 Template.Unit.helpers
   unitStyle: ->
-    "left: #{Template.instance().currentLocation.get()[0] * gridItemSize}px;
-    top: #{Template.instance().currentLocation.get()[1] * gridItemSize}px;"
+    "left: #{Template.instance().currentLocation.get()[0] * tileSize}px;
+    top: #{Template.instance().currentLocation.get()[1] * tileSize}px;"
 
   imageStyle: ->
     # The extra 90 is to compensate for the fact that the images are pointing

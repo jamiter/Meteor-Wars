@@ -1,9 +1,9 @@
-gridItemSize = 80
+tileSize = 80
 
 Template.Immutable.helpers
   unitStyle: ->
-    "left: #{@loc[0] * gridItemSize}px;
-    top: #{@loc[1] * gridItemSize}px;"
+    "left: #{@loc[0] * tileSize}px;
+    top: #{@loc[1] * tileSize}px;"
 
   imageStyle: ->
     "transform: rotate(#{@angle or 0}deg);"
