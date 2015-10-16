@@ -246,9 +246,21 @@ class Unit extends Model
       loc: point
       moved: true
 
+  findClosestEnemy: ->
+    query = @getTargetQuery()
+    delete query.loc.$maxDistance
+
+    options =
+      fields: loc: 1
+
+    Units.findOne(query, options)
+
   runAi: ->
     round = @findRound()
 
+    # First try to find a direct target to shoot
+    # Else find the closest reachable target to move to
+    # Else find the closest unit to move to
     if target = @findSingleTargetUnit()
       @attack target
     else
@@ -259,21 +271,34 @@ class Unit extends Model
         fields: loc: 1
         $sort: health: 1
 
-      closestLocation = Units.find(query, options).fetch()[0]?.loc
+      closestTargetLocation = Units.findOne(query, options)?.loc
+
+      if not closestTargetLocation
+        closestUnitLocation = @findClosestEnemy()?.loc
 
     grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
 
     tiles = @getReachableTiles grid
 
-    if not closestLocation
+    if closestUnitLocation
+      # Find a tile closest to an enemy unit
+      tiles.sort (a, b) ->
+        distA = getDistanceBetweenPoints a, closestUnitLocation
+        distB = getDistanceBetweenPoints b, closestUnitLocation
+
+        distA - distB
+
+      targetTile = tiles[0]
+
+    else if closestTargetLocation
+      # Find a tile next to the target
+      tiles.some (tile, index) ->
+        if 1 >= getDistanceBetweenPoints tile, closestTargetLocation
+          targetTile = tiles[index]
+    else
       # Super intellegence: No enemy close? Move randomly!
       index = Math.floor Math.random() * tiles.length
-    else
-      tiles.some (tile, i) ->
-        if 1 >= getDistanceBetweenPoints tile, closestLocation
-          index = i
-
-    targetTile = tiles[index]
+      targetTile = tiles[index]
 
     if targetTile
       path = @getPathToPoint grid, targetTile
