@@ -11,6 +11,7 @@ UnitSchema = new SimpleSchema
     type: String
   roundId:
     type: String
+    index: 1
   angle:
     type: Number
     min: -360

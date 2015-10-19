@@ -2,12 +2,25 @@
   transform: (data) ->
     new Turn data
 
+TurnSchema = new SimpleSchema
+  gameId:
+    type: String
+  roundId:
+    type: String
+    index: 1
+  playerId:
+    type: String
+  startedAt:
+    type: Date
+  finishedAt:
+    type: Date
+    optional: true
+
+Turns.attachSchema TurnSchema
+
 class Turn extends Model
 
   @_collection: Turns
-
-  start: ->
-    @update $set: startedAt: new Date
 
   finish: ->
     Units.update

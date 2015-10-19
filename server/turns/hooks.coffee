@@ -1,10 +1,8 @@
 # Start AI when a turn is started
-Turns.after.update (userId, doc, fieldNames) ->
-  if doc.startedAt and 'startedAt' in fieldNames
+Turns.after.insert (userId, doc) ->
+  player = Players.findOne doc.playerId
 
-    player = Players.findOne doc.playerId
-
-    if player?.isAi()
-      player.runAi().catch (err) ->
-        console.error err, err.stack
-        player.findRound().nextTurn()
+  if player?.isAi()
+    player.runAi().catch (err) ->
+      console.error err, err.stack
+      player.findRound().nextTurn()

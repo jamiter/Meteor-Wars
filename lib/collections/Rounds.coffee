@@ -43,9 +43,11 @@ class Round extends Model
     if @hasFinished() then throw new Error @constructor.ERROR_ALREADY_FINISHED
 
   getCurrentTurn: ->
-    return if not @currentTurnId
-
-    Turns.findOne @currentTurnId
+    Turns.findOne
+      roundId: @_id
+      startedAt: $ne: null
+    ,
+      sort: startedAt: -1
 
   nextTurn: ->
     # This can only be done server side
@@ -59,15 +61,13 @@ class Round extends Model
 
       @getCurrentTurn()?.finish()
 
-      @currentTurnId = Turns.insert
+      turnData =
+        gameId: @gameId
         roundId: @_id
         playerId: nextPlayer._id
+        startedAt: new Date
 
-      @update $set: currentTurnId: @currentTurnId
-
-      turn = @getCurrentTurn()
-      turn?.start()
-      turn
+      Turns.insert turnData
 
   _checkWin: ->
     @_checkFinished()
