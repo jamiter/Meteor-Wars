@@ -43,6 +43,12 @@ Template.RoundMap.onCreated ->
 Template.RoundMap.onRendered ->
   @$('.modal-trigger').leanModal()
 
+  @autorun =>
+    if @subscriptionsReady()
+      if (round = findRound()) and not round.hasFinished()
+        if player = round.getCurrentPlayer()
+          Blaze.renderWithData Template.PlayerTurnAlert, player, document.body
+
 Template.RoundMap.helpers
   mapStyle: ->
     grid = Template.instance().grid

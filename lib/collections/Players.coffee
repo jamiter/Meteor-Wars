@@ -26,6 +26,13 @@ class Player extends Model
   isCurrentPlayer: ->
     @_id is @findRound()?.getCurrentPlayer()?._id
 
+  getDayNumber: ->
+    Turns.find
+      gameId: @gameId
+      roundId: @roundId
+      playerId: @_id
+    .count()
+
   getTeamColor: ->
     if @color
       @color

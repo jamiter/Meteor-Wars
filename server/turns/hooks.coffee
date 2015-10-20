@@ -3,6 +3,8 @@ Turns.after.insert (userId, doc) ->
   player = Players.findOne doc.playerId
 
   if player?.isAi()
-    player.runAi().catch (err) ->
-      console.error err, err.stack
-      player.findRound().nextTurn()
+    Meteor.setTimeout ->
+      player.runAi().catch (err) ->
+        console.error err, err.stack
+        player.findRound().nextTurn()
+    , 1800
