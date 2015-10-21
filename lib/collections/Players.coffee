@@ -28,7 +28,6 @@ class Player extends Model
 
   getDayNumber: ->
     Turns.find
-      gameId: @gameId
       roundId: @roundId
       playerId: @_id
     .count()
