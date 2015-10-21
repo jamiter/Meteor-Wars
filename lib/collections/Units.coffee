@@ -76,7 +76,9 @@ class Unit extends Model
   getDamage: (unit) ->
     return 0 if not dmg = @damage?[unit.type]
 
-    Math.ceil @getStrengthDamageModifier() * (dmg + (0.8 + Math.random() * 0.4))
+    randomizer = (0.9 + Math.random() * 0.2)
+
+    Math.ceil(@getStrengthDamageModifier() * dmg * randomizer)
 
   getStrength: ->
     health = @getHealth()
