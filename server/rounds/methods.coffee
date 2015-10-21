@@ -20,6 +20,8 @@ Meteor.methods
       userId: @userId
 
     if player
+      player.set surrenderedAt: new Date
+
       Units.remove playerId: player._id
 
   'round/add-ai': (roundId) ->
