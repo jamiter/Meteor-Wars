@@ -117,13 +117,12 @@ class Unit extends Model
     Units.find query, options
 
   getTargetQuery: ->
-    query =
-      _id: $ne: @_id
-      playerId: $ne: @playerId
-      roundId: @roundId
-      loc:
-        $near: @loc
-        $maxDistance: 1
+    _id: $ne: @_id
+    playerId: $ne: @playerId
+    roundId: @roundId
+    loc:
+      $near: @loc
+      $maxDistance: 1
 
   findSingleTargetUnit: ->
     query = @getTargetQuery()

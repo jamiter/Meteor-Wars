@@ -2,7 +2,7 @@ gridTileSize = 80
 
 findRound = ->
   roundId = FlowRouter.getParam 'roundId'
-  round = Rounds.findOne roundId
+  Rounds.findOne roundId
 
 Template.RoundMap.onCreated ->
   @path = new ReactiveVar []
