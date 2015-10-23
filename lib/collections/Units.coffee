@@ -161,16 +161,16 @@ class Unit extends Model
 
     unit.takeDamage @getDamage(unit)
 
-    if unit.health >= 0
+    if unit.health > 0
       @takeDamage unit.getDamage this
 
   takeDamage: (damage) ->
-    health = Math.max(0, @getHealth() - damage)
+    @health = Math.max(0, @getHealth() - damage)
 
-    if health is 0
+    if @health is 0
       @remove()
     else
-      @set health: health
+      @set health: @health
 
   canDoAction: ->
     player = @findPlayer()
