@@ -282,21 +282,19 @@ class Unit extends Model
 
     tiles = @getReachableTiles grid
 
-    if closestUnitLocation
-      # Find a tile closest to an enemy unit
+    closestTile = (location) ->
       tiles.sort (a, b) ->
-        distA = getDistanceBetweenPoints a, closestUnitLocation
-        distB = getDistanceBetweenPoints b, closestUnitLocation
+        distA = getDistanceBetweenPoints a, location
+        distB = getDistanceBetweenPoints b, location
 
         distA - distB
 
-      targetTile = tiles[0]
+      tiles[0]
 
+    if closestUnitLocation
+      targetTile = closestTile closestUnitLocation
     else if closestTargetLocation
-      # Find a tile next to the target
-      tiles.some (tile, index) ->
-        if 1 >= getDistanceBetweenPoints tile, closestTargetLocation
-          targetTile = tiles[index]
+      targetTile = closestTile closestTargetLocation
     else
       # Super intellegence: No enemy close? Move randomly!
       index = Math.floor Math.random() * tiles.length
