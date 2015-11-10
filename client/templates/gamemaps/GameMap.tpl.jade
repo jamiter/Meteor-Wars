@@ -1,0 +1,14 @@
+.map(style=mapStyle)
+  each terrains
+    +Terrain
+
+  each tiles
+    each this
+      .tile.unit-type-placement(class=gridClass, data-x=x, data-y=y)
+        .overlay
+
+  each findTerrains
+    +Terrain
+
+  each findUnits
+    +GameMapUnit(unit=this grid=grid)

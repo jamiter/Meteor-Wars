@@ -28,6 +28,7 @@ check
 matb33:collection-hooks
 momentjs:moment
 aldeed:collection2
+mizzao:jquery-ui
 materialize:materialize@=0.97.0
 mquandalle:jade
 kadira:flow-router

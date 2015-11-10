@@ -17,14 +17,6 @@ GameSchema = new SimpleSchema
         new Date
   name:
     type: String
-  minPlayers:
-    type: Number
-  maxPlayers:
-    type: Number
-  maps:
-    type: [Object]
-    minCount: 1
-    blackbox: true
 
 Games.attachSchema GameSchema
 
@@ -44,5 +36,6 @@ class Game extends Model
   newRound: ->
     roundId = Rounds.insert
       gameId: @_id
+      gameMapId: GameMaps.findOne(gameId: @_id)?._id
 
     Rounds.findOne roundId

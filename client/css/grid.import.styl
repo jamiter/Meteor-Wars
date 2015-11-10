@@ -11,6 +11,18 @@ greenBgColor = #B3D72F
   66%
     transform rotate(15deg)
 
+@keyframes wave
+  from, to
+    opacity 0
+    transform scale(.6)
+
+  33%
+    opacity .7
+
+  66%
+    opacity .5
+    transform scale(1)
+
 .map-container
   overflow-x scroll
   overflow-y scroll
@@ -23,78 +35,101 @@ greenBgColor = #B3D72F
   background greenBgColor
   border-radius 5px
 
-  .unit
-    z-index 10
+.unit, .unit-type
+  z-index 10
+  position absolute
+  width 78px
+  height 78px
+  border-radius 2px
+  margin 1px
+  padding 10px
+  border 2px dashed transparent
+
+  .image
+    transition all .1s
+
+  &.terrain
+    z-index 1
+    width 80px
+    height 80px
+    border-radius 0
+    margin 0
+    padding 0
+    border 0px dashed transparent
+    svg, img
+      width 80px
+      height 80px
+
+    #River
+      #Line
+        animation wave 3s infinite
+        transform-origin center center
+
+  svg, img
+    width 52px
+    height 52px
+
+  .infantry
+    animation hangingout 5s infinite
+    transform scale(0.9)
+
+  &.object
+    background black
+
+  &.selected
+    border-color blue
+
+  &.targeted
+    border-color red
+    border-radius 100px
+    cursor crosshair
+
+  .strength
     position absolute
-    width 78px
-    height 78px
+    right 3px
+    bottom -1px
+    display inline-block
+    border 1px solid #999
     border-radius 2px
-    margin 1px
-    padding 10px
-    transition all .2s
-    border 2px dashed transparent
+    text-align center
+    min-width 15px
+    padding 0 1px
+    font-size 10px
+    background rgba(255,255,255,0.8)
+    display none
 
-    .image
-      transition all .1s
+  .health-bar
+    position absolute
+    left 20px
+    bottom 1px
+    border 1px solid black
+    width 32px
+    height 3px
+    background rgba(255,0,0,0.5)
+    border-radius 2px
+    .inner
+      height 1px
+      background rgb(0,255,0)
+      transition width .3s
 
-    &.immutable
-      z-index 1
-
-    svg
-      width 52px
-      height 52px
-
-    .infantry
-      animation hangingout 5s infinite
-      transform scale(0.9)
-
-    &.object
-      background black
-
-    &.selected
-      border-color blue
-
-    &.targeted
-      border-color red
-      border-radius 100px
-      cursor crosshair
-
-    .strength
-      position absolute
-      right 3px
-      bottom -1px
+  .corner-icons
+    position absolute
+    top 1px
+    right 5px
+    color red
+    text-shadow 1px 1px 0 rgba(0,0,0,0.8), -1px -1px 0 rgba(0,0,0,0.8), -1px 1px 0 rgba(0,0,0,0.8), 1px -1px 0 rgba(0,0,0,0.8)
+    .fa
       display inline-block
-      border 1px solid #999
-      border-radius 2px
-      text-align center
-      min-width 15px
-      padding 0 1px
-      font-size 10px
-      background rgba(255,255,255,0.8)
-      display none
 
-    .health-bar
-      position absolute
-      left 20px
-      bottom 1px
-      border 1px solid black
-      width 32px
-      height 3px
-      background rgba(255,0,0,0.5)
-      border-radius 2px
-      .inner
-        height 1px
-        background rgb(0,255,0)
-        transition width .3s
+.unit
+  transition all .2s
 
-    .corner-icons
-      position absolute
-      top 1px
-      right 5px
-      color red
-      text-shadow 1px 1px 0 rgba(0,0,0,0.8), -1px -1px 0 rgba(0,0,0,0.8), -1px 1px 0 rgba(0,0,0,0.8), 1px -1px 0 rgba(0,0,0,0.8)
-      .fa
-        display inline-block
+.unit-type-bar
+  border-bottom 1px solid #ddd
+
+  .unit-type
+    position relative
+    display inline-block
 
 .tile
   z-index 5

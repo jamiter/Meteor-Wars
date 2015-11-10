@@ -36,3 +36,9 @@ class Turn extends Model
 
   findPlayer: ->
     Players.findOne @playerId
+
+  findRound: ->
+    Rounds.findOne @roundId
+
+  hasFinished: ->
+    Boolean @finishedAt

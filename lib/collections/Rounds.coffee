@@ -2,12 +2,41 @@
   transform: (data) ->
     new Round data
 
+RoundSchema = new SimpleSchema
+  createdAt:
+    type: Date
+    autoValue: ->
+      if @isInsert
+        new Date
+      else if @isUpsert
+        $setOnInsert: new Date
+  updatedAt:
+    type: Date
+    autoValue: ->
+      if @isInsert or @isUpdate
+        new Date
+  gameId:
+    type: String
+  gameMapId:
+    type: String
+  startedAt:
+    type: Date
+    optional: true
+  finishedAt:
+    type: Date
+    optional: true
+  winnerId:
+    type: String
+    optional: true
+  dir:
+    type: Number
+    optional: true
+
+Rounds.attachSchema RoundSchema
+
 class Round extends Model
 
   @_collection: Rounds
-
-  @MINIMUM_PLAYERS = 2
-  @MAXIMUM_PLAYERS = 2
 
   @ERROR_NOT_ENOUGH_PLAYERS = "Not enought players to start the round"
   @ERROR_MAXIMUM_PLAYERS = "This round is already at its maximum of players"
@@ -121,7 +150,7 @@ class Round extends Model
       nextPlayer or findFirst()
 
   maxPlayersReached: ->
-    @findPlayers().count() >= @findGame().maxPlayers
+    @findPlayers().count() >= @findMap().maxPlayers
 
   canJoin: (userId) ->
     return false if @hasStarted()
@@ -176,9 +205,16 @@ class Round extends Model
 
     Units.insert mergedData
 
-  start: ->
-    round = this
+  addTerrain: (data = {}) ->
+    defaultData =
+      roundId: @_id
+      gameId: @gameId
 
+    mergedData = _.extend {}, data, defaultData
+
+    Terrains.insert mergedData
+
+  start: ->
     if not @canStart()
       throw new Meteor.Error "NO_PLAYERS_YET"
     else
@@ -192,10 +228,13 @@ class Round extends Model
     if userId and @createdBy isnt userId
       return false
 
-    @countPlayers() >= @findGame().maxPlayers
+    @countPlayers() >= @findMap().maxPlayers
 
   findGame: ->
     Games.findOne @gameId
+
+  findMap: ->
+    GameMaps.findOne @gameMapId
 
   hasStarted: ->
     Boolean @startedAt

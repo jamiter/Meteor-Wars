@@ -12,3 +12,4 @@ Template.SettingsLayout.onCreated ->
     return unless gameId = FlowRouter.getParam('gameId')
 
     @subscribe 'rounds', gameId: gameId
+    @subscribe 'gamemaps', gameId: gameId

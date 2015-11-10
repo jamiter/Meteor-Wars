@@ -1,0 +1,31 @@
+.row
+  .col.s12
+    ul.tabs
+      li.tab.col.s4
+        a(href="#units-tab") Units
+      li.tab.col.s4
+        a(href="#terrain-tab") Terrain
+      li.tab.col.s4
+        a(href="#map-tab") Map
+  #units-tab.col.s12
+    form.col.m3
+      h5
+        span Players
+        //span.btn-floating.add-player
+        //  i.material-icons
+      each players
+        p
+          input(id="player{{this}}", type="radio", name="playerIndex", value=this)
+          label(for="player{{this}}") Player {{this}}
+    .col.m9
+      h5 Units
+      +GameMapUnitTypeBar
+  #terrain-tab.col.s12
+    h5 Objects
+    +GameMapTerrainTypeBar
+  #map-tab.col.s12
+    h5 Map size
+    .btn.plus-x +X
+    .btn.minus-x -X
+    .btn.plus-y +Y
+    .btn.minus-y -Y

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+    <title>Bridge</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path id="path-1" d="M2,32.2316569 C2,32.2316569 2.4855957,20.5631565 2.4855957,17.3397786 C2.4855957,11.0281413 2,1.27084961 2,1.27084961 L2,0 L28,0 L28,1.28385417 C28,1.28385417 28.3916016,12.597819 28.3916016,18.2531413 C28.3916016,23.0594781 28,32.6688314 28,32.6688314 L28,34 L2,34 L2,32.2316569 Z"></path>
+        <rect id="path-2" x="0" y="5" width="30" height="23"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Bridge" sketch:type="MSLayerGroup" transform="translate(0.000000, -2.000000)">
+            <g id="Water">
+                <use stroke="#3B71D8" stroke-width="2" fill="#4E8AFF" fill-rule="evenodd" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                <use stroke="#B065A0" stroke-width="1" fill="none" xlink:href="#path-1"></use>
+            </g>
+            <g id="Road">
+                <use stroke="none" fill="#A0A7C1" fill-rule="evenodd" sketch:type="MSShapeGroup" xlink:href="#path-2"></use>
+                <use stroke="#A0A7C1" stroke-width="1" fill="none" xlink:href="#path-2"></use>
+            </g>
+            <path d="M0.5,26.5 L29.5,26.5" id="Line" stroke="#B7B6C8" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+            <path d="M3.5,25 C5.49999982,25 24.5,25 26.5,25 C28.5,25 30,28.4285714 30,28.4285714 L30,29 L-7.10542736e-15,29 L-7.10542736e-15,28.4285714 C-7.10542736e-15,28.4285714 1.50000018,25 3.5,25 Z" id="Rectangle-42" stroke="#567698" fill="#80869C" sketch:type="MSShapeGroup"></path>
+            <path d="M5.49999998,27.3333333 C5.99999996,26.8888889 6.99999995,26.8888889 7.49999995,27.3333333 C7.99999995,27.7777777 8,30 8,30 L5,30 C5,30 5,27.7777778 5.49999998,27.3333333 Z" id="Rectangle-44" fill="#4E8AFF" sketch:type="MSShapeGroup"></path>
+            <path d="M11.5,27.3333333 C12,26.8888889 13,26.8888889 13.5,27.3333333 C14,27.7777777 14,30 14,30 L11,30 C11,30 11,27.7777778 11.5,27.3333333 Z" id="Rectangle-44" fill="#4E8AFF" sketch:type="MSShapeGroup"></path>
+            <path d="M17.5,27.3333333 C18,26.8888889 19,26.8888889 19.5,27.3333333 C20,27.7777777 20,30 20,30 L17,30 C17,30 17,27.7777778 17.5,27.3333333 Z" id="Rectangle-44" fill="#4E8AFF" sketch:type="MSShapeGroup"></path>
+            <path d="M23.5,27.3333333 C24,26.8888889 25,26.8888889 25.5,27.3333333 C26,27.7777777 26,30 26,30 L23,30 C23,30 23,27.7777778 23.5,27.3333333 Z" id="Rectangle-44" fill="#4E8AFF" sketch:type="MSShapeGroup"></path>
+            <path d="M3.5,2 C5.49999982,2 24.5,2.00000002 26.5,2 C28.5,1.99999998 30,4.57142857 30,4.57142857 L30,5 L-7.10542736e-15,5 L-7.10542736e-15,4.57142857 C-7.10542736e-15,4.57142857 1.50000018,2 3.5,2 Z" id="Rectangle-42" stroke="#567698" fill="#80869C" sketch:type="MSShapeGroup"></path>
+            <path d="M0.5,6.5 L29.5,6.5" id="Line" stroke="#B7B6C8" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+            <path d="M4.5,16.5 L10.5,16.5" id="Line" stroke="#ECECEC" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+            <path d="M19.5,16.5 L25.5,16.5" id="Line" stroke="#ECECEC" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

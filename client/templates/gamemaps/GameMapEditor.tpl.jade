@@ -1,0 +1,17 @@
+.navbar-fixed
+  nav
+    .nav-wrapper
+      .container
+        a.brand-logo.center(href='/') Meteor Wars
+        ul.left
+          li
+            +loginButtons
+
+if Template.subscriptionsReady
+  with map
+    .container
+      h4= name
+      +GameMapEditorToolbar(players=players map=this)
+    +GameMap
+else
+  +Loader

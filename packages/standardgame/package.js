@@ -7,14 +7,18 @@ Package.describe({
 });
 
 var objectFiles = [
-  'objects/ObjectForest.html'
+    'objects/ObjectForest.html',
+    'terrains/TerrainMountain.html',
+    'terrains/TerrainRiver.html',
+    'terrains/TerrainBridge.html',
+    'terrains/TerrainRoadH.html'
 ];
 
 var unitFiles = [
-  'units/UnitJeep.html',
-  'units/UnitRifleman.html',
-  'units/UnitTank.html',
-  'units/UnitBazooka.html',
+    'units/UnitJeep.html',
+    'units/UnitRifleman.html',
+    'units/UnitTank.html',
+    'units/UnitBazooka.html'
 ];
 
 Package.onUse(function(api) {

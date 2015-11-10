@@ -1,5 +1,3 @@
-gridTileSize = 80
-
 findRound = ->
   roundId = FlowRouter.getParam 'roundId'
   Rounds.findOne roundId
@@ -9,7 +7,8 @@ Template.RoundMap.onCreated ->
 
   @autorun =>
     if round = findRound()
-      @grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
+      if map = round.findMap()
+        @grid = new PF.Grid(map.dimensions[0],map.dimensions[1])
 
   @autorun =>
     unitId = Session.get 'selectedUnitId'
@@ -34,10 +33,12 @@ Template.RoundMap.onCreated ->
     return unless roundId = FlowRouter.getParam('roundId')
 
     @subscribe 'games', _id: gameId
+    @subscribe 'gamemaps', gameId: gameId
+    @subscribe 'unittypes', gameId: gameId
     @subscribe 'rounds', _id: roundId
     @subscribe 'players', roundId: roundId
     @subscribe 'units', roundId: roundId
-    @subscribe 'immutables', roundId: roundId
+    @subscribe 'terrains', roundId: roundId
     @subscribe 'turns', roundId: roundId
 
 Template.RoundMap.onRendered ->
@@ -73,10 +74,10 @@ Template.RoundMap.helpers
 
     Units.find roundId: roundId
 
-  immutables: ->
+  terrains: ->
     return unless roundId = FlowRouter.getParam 'roundId'
 
-    Immutables.find roundId: roundId
+    Terrains.find roundId: roundId
 
   hasFinished: ->
     findRound()?.hasFinished()
@@ -121,7 +122,7 @@ Template.RoundMap.events
   'click .next-turn': ->
     @nextTurn()
 
-  'mouseover .tile': ->
+  'mouseover .tile.reachable': ->
     return unless unitId = Session.get 'selectedUnitId'
     return unless roundId = FlowRouter.getParam 'roundId'
 
@@ -133,12 +134,12 @@ Template.RoundMap.events
 
     path = unit.getPathToPoint Template.instance().grid, point
 
-    if path.length > (unit.moverange + 1)
+    if path.cost > (unit.moverange)
       Template.instance().path.set []
     else
       Template.instance().path.set path
 
-  'click .tile': ->
+  'click .tile.reachable': ->
     return unless unitId = Session.get 'selectedUnitId'
     return unless unit = Units.findOne unitId
 

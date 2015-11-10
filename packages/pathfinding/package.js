@@ -1,14 +1,15 @@
 Package.describe({
-  name: 'pathfinding',
-  version: '0.4.17'
+    name: 'pathfinding',
+    version: '0.4.17'
 });
 
 Npm.depends({
-  pathfinding: "0.4.17"
+    pathfinding: "0.4.17"
 });
 
 Package.onUse(function (api) {
-  api.addFiles('./.npm/package/node_modules/pathfinding/visual/lib/pathfinding-browser.min.js', ['client']);
-  api.addFiles('./pathfinding.js', ['server']);
-  api.export('PF', ['server']);
+    api.addFiles('./.npm/package/node_modules/pathfinding/visual/lib/pathfinding-browser.min.js', ['client']);
+    api.addFiles('./pathfinding.js', ['server']);
+    api.export('PF', ['server']);
+    api.addFiles('./pathfinding-cost.js', ['server', 'client']);
 });

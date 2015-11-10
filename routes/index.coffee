@@ -13,3 +13,11 @@ FlowRouter.route '/games/:gameId/rounds/:roundId',
 FlowRouter.route '/games/:gameId/rounds/:roundId/play',
   action: ->
     BlazeLayout.render 'GameLayout', main: 'RoundMap'
+
+FlowRouter.route '/games/:gameId/maps',
+  action: ->
+    BlazeLayout.render 'SettingsLayout', main: 'GameMapOverview'
+
+FlowRouter.route '/games/:gameId/maps/:gameMapId',
+  action: ->
+    BlazeLayout.render 'GameLayout', main: 'GameMapEditor'

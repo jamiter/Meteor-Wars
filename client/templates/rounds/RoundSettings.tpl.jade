@@ -1,25 +1,34 @@
 with round
   h2
     span #{name}
-    small (#{findGame.name})
-  i Get ready to rumble...
+    //small (#{findGame.name})
+  .row
+    form.col.m8
+      .row
+        .input-field.col.s12
+          +PlayerList players=findPlayers
+    form.col.m4
+      .row
+        .input-field.col.s12
+          select#map-select
+            each maps
+              option(value=_id, selected="{{equals _id ../gameMapId}}")= name
+          label Map
 
-  h4 Players
-  +PlayerList players=findPlayers
-  
-  unless hasStarted
-    if canJoin
-      button.btn.join-game Join game
-    else if maxPlayersReached
-      p This game has the maximum number of players.
-      
-    if canStart
-      .btn.start-game Start game
-    else if maxPlayersReached
-      p Waiting for <b>#{hostName}</b> to start the game...
-    else
-      p Waiting for more players...
-      if imOwner
-        button.btn.add-ai Or add a computer player
-  else
-    button.btn.go-to-game Go to game
+    .col.s12
+      unless hasStarted
+        if canJoin
+          button.btn.join-game Join game
+        else if maxPlayersReached
+          p This game has the maximum number of players.
+
+        if canStart
+          .btn.start-game Start game
+        else if maxPlayersReached
+          p Waiting for <b>#{hostName}</b> to start the game...
+        else
+          p Waiting for more players...
+          if imOwner
+            button.btn.add-ai Or add a computer player
+      else
+        button.btn.go-to-game Go to game

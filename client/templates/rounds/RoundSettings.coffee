@@ -8,16 +8,20 @@ Template.RoundSettings.onCreated ->
     if (round = findRound()) and round.hasStarted()
       FlowRouter.go "/games/#{round.gameId}/rounds/#{round._id}/play"
 
+Template.RoundSettings.onRendered ->
+  selectInitialized = false
+
+  @autorun =>
+    if not selectInitialized and findRound()
+      selectInitialized = true
+
+      Meteor.setTimeout ->
+        @$('select').material_select()
+      , 100
+
 Template.RoundSettings.helpers
-  map: ->
-    gameId = FlowRouter.getParam 'gameId'
-
-    Games.findOne(_id: gameId).maps
-
   round: ->
-    roundId = FlowRouter.getParam 'roundId'
-
-    Rounds.findOne _id: roundId
+    findRound()
 
   hostName: ->
     Players.findOne(userId: @createdBy)?.name or 'the host'
@@ -31,6 +35,9 @@ Template.RoundSettings.helpers
   imOwner: ->
     Meteor.userId() is @createdBy
 
+  maps: ->
+    GameMaps.find(gameId: @gameId)
+
 Template.RoundSettings.events
   'click .join-game': (event) ->
     @addPlayer userId: Meteor.userId()
@@ -38,41 +45,13 @@ Template.RoundSettings.events
   'click .leave-game': (event) ->
 
   'click .start-game': (event) ->
-    gameId = FlowRouter.getParam 'gameId'
-    roundId = FlowRouter.getParam 'roundId'
+    round = findRound()
 
-    maps = Games.findOne(_id: gameId).maps
-
-    round = Rounds.findOne(_id: roundId)
-
-    selectedMap = maps[maps.length-1]
-    Rounds.update({_id: roundId}, {$set: {selectedMap: selectedMap.name, mapMatrix: selectedMap.mapMatrix}})
-
-    selectedMap.objectMapping.forEach (object) ->
-      unit =
-        loc: object.loc
-        angle: object.angle
-        playerIndex: object.playerIndex
-
-      if object.unitObjectType
-        for attr of object.unitObjectType
-          if attr is 'maxHealth'
-            unit.health = object.unitObjectType[attr]
-
-          unit[attr] = object.unitObjectType[attr]
-
-        round.addUnit unit
-      if object.immutableObjectType
-        for attr of object.immutableObjectType
-          unit[attr] = object.immutableObjectType[attr]
-
-        delete unit.playerIndex
-        unit.roundId = roundId
-        Immutables.insert unit
-
-    round.start()
-
-    FlowRouter.go "/games/#{round.gameId}/rounds/#{round._id}/play"
+    Meteor.call 'round/start', round._id, (err) ->
+      if err
+        alert err.message
+      else
+        FlowRouter.go "/games/#{round.gameId}/rounds/#{round._id}/play"
 
   'click .go-to-game': (event) ->
     FlowRouter.go "/games/#{@gameId}/rounds/#{@_id}/play"
@@ -81,3 +60,7 @@ Template.RoundSettings.events
     roundId = FlowRouter.getParam 'roundId'
 
     Meteor.call 'round/add-ai', roundId
+
+  'change #map-select': (e) ->
+    if gameMapId = $(e.currentTarget).val()
+      @set gameMapId: gameMapId

@@ -9,6 +9,8 @@ UnitSchema = new SimpleSchema
     type: String
   playerId:
     type: String
+  unitTypeId:
+    type: String
   roundId:
     type: String
     index: 1
@@ -16,8 +18,6 @@ UnitSchema = new SimpleSchema
     type: Number
     min: -360
     max: 360
-  name:
-    type: String
   type:
     type: String
   maxHealth:
@@ -30,6 +30,17 @@ UnitSchema = new SimpleSchema
     type: Number
   moverange:
     type: Number
+  moveType:
+    type: String
+    allowedValues: [
+      'foot'
+      'mech'
+      'wheels'
+      'threads'
+      'air'
+      'lander'
+      'ship'
+    ]
   damage:
     type: Object
     blackbox: true
@@ -54,7 +65,7 @@ Units.attachSchema UnitSchema
 getDistanceBetweenPoints = (a, b) ->
   Math.sqrt( Math.pow((a[0]-b[0]), 2) + Math.pow((a[1]-b[1]), 2) )
 
-class Unit extends Model
+class @Unit extends Model
 
   @_collection: Units
 
@@ -76,9 +87,20 @@ class Unit extends Model
   getDamage: (unit) ->
     return 0 if not dmg = @damage?[unit.type]
 
+    terrain = Terrains.findOne
+      roundId: @roundId
+      loc: unit.loc
+
+    if terrain?.defence is 0
+      defenceModifier = 1
+    else if terrain?.defence?
+      defenceModifier = 1 - (terrain?.defence / 10)
+    else
+      defenceModifier = 0.9
+
     randomizer = (0.9 + Math.random() * 0.2)
 
-    Math.ceil(@getStrengthDamageModifier() * dmg * randomizer)
+    Math.ceil(@getStrengthDamageModifier() * dmg * randomizer * defenceModifier)
 
   getStrength: ->
     health = @getHealth()
@@ -154,6 +176,7 @@ class Unit extends Model
 
     @set
       attacked: true
+      moved: true
       angle: @getAngleToPoint unit.loc
 
     unit.set
@@ -179,6 +202,40 @@ class Unit extends Model
 
     (not Meteor.isClient) or player.userId is Meteor.userId()
 
+  markGridObstacles: (grid, units = @getBlockingUnits(), terrains = @getBlockingTerrains()) ->
+    defaultTerrain =
+      defence: 1
+      moveCost:
+        foot: 1
+        mech: 1
+        wheels: 2
+        threads: 1
+        air: 1
+
+    console.log moveCost = defaultTerrain.moveCost[@moveType]
+
+    for row in grid.nodes
+      for node in row
+        if moveCost
+          node.walkable = true
+          node.cost = moveCost
+        else
+          node.walkable = false
+
+    terrains.forEach (terrain) =>
+      # Backwards compatibility
+      return unless terrain.moveCost
+
+      if terrain.moveCost[@moveType]?
+        grid.setWalkableAt terrain.loc[0], terrain.loc[1], true
+        grid.getNodeAt(terrain.loc[0], terrain.loc[1]).cost = terrain.moveCost[@moveType]
+      else
+        grid.setWalkableAt terrain.loc[0], terrain.loc[1], false
+
+    units.forEach (unit) =>
+      if unit.playerId isnt @playerId
+        grid.setWalkableAt unit.loc[0], unit.loc[1], false
+
   getReachableTiles: (grid, options = {}) ->
     tiles = []
     indexedTiles = {}
@@ -193,23 +250,29 @@ class Unit extends Model
       rightX = Math.min grid.width - 1, @loc[0] + @moverange
       bottomY = Math.min grid.height - 1, @loc[1] + @moverange
 
-      units = Units.find
-        roundId: @roundId
-        unitId: $ne: @_id
-
       walkGrid = grid.clone()
+      units = @getBlockingUnits()
 
-      units.forEach (unit) ->
-        walkGrid.setWalkableAt unit.loc[0], unit.loc[1], false
+      @markGridObstacles walkGrid, units
+
+      unitPositionsMap = units.fetch().reduce (map, unit) ->
+        map[unit.loc.toString()] = 1
+        map
+      , {}
+
+      units.forEach (unit) =>
+        if unit.playerId isnt @playerId
+          walkGrid.setWalkableAt unit.loc[0], unit.loc[1], false
 
       for x in [leftX..rightX]
         for y in [topY..bottomY]
           # Don't mark the units position as walkable
           continue if x is @loc[0] and y is @loc[1]
+          continue if unitPositionsMap["#{x},#{y}"]
 
           path = finder.findPath @loc[0], @loc[1], x, y, walkGrid.clone()
 
-          if path.length and path.length <= (@moverange + 1)
+          if path.cost and path.cost <= (@moverange)
             if options.indexed
               indexedTiles["#{x}:#{y}"] = 1
             else
@@ -224,14 +287,18 @@ class Unit extends Model
     Units.find
       roundId: @roundId
       _id: $ne: @_id
+      loc:
+        $near: @loc
+        $maxDistance: @moverange
+
+  getBlockingTerrains: ->
+    Terrains.find
+      roundId: @roundId
 
   getPathToPoint: (grid, point, options = {}) ->
-    blockingUnits = @getBlockingUnits()
-
     walkGrid = grid.clone()
 
-    blockingUnits.forEach (unit) ->
-      walkGrid.setWalkableAt unit.loc[0], unit.loc[1], false
+    @markGridObstacles walkGrid
 
     if options.reverse
       finder.findPath point[0], point[1], @loc[0], @loc[1], walkGrid
@@ -259,6 +326,7 @@ class Unit extends Model
 
   runAi: ->
     round = @findRound()
+    map = round.findMap()
 
     # First try to find a direct target to shoot
     # Else find the closest reachable target to move to
@@ -278,11 +346,18 @@ class Unit extends Model
       if not closestTargetLocation
         closestUnitLocation = @findClosestEnemy()?.loc
 
-    grid = new PF.Grid(round.mapMatrix[0],round.mapMatrix[1])
+    grid = new PF.Grid(map.dimensions[0],map.dimensions[1])
 
     tiles = @getReachableTiles grid
 
-    closestTile = (location) ->
+    closestTile = (location) =>
+      path = @getPathToPoint grid.clone(), location, reverse: true
+
+      for point in path
+        for tile in tiles
+          if (tile[0] is point[0]) and (tile[1] is point[1])
+            return tile
+
       tiles.sort (a, b) ->
         distA = getDistanceBetweenPoints a, location
         distB = getDistanceBetweenPoints b, location
@@ -301,7 +376,7 @@ class Unit extends Model
       targetTile = tiles[index]
 
     if targetTile
-      path = @getPathToPoint grid, targetTile
+      path = @getPathToPoint grid.clone(), targetTile
     else
       path = []
 
