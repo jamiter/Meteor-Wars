@@ -22,12 +22,20 @@ GameMapSchema = new SimpleSchema
     type: String
   dimensions:
     type: [Number]
+    max: 30
+    min: 5
+    maxCount: 2
+    minCount: 2
   name:
     type: String
   minPlayers:
     type: Number
+    min: 2
+    max: 4
   maxPlayers:
     type: Number
+    min: 2
+    max: 4
 
 GameMaps.attachSchema GameMapSchema
 
