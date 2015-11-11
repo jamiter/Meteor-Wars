@@ -10,8 +10,10 @@ var objectFiles = [
     'objects/ObjectForest.html',
     'terrains/TerrainMountain.html',
     'terrains/TerrainRiver.html',
+    'terrains/TerrainRiverH.html',
     'terrains/TerrainBridge.html',
-    'terrains/TerrainRoadH.html'
+    'terrains/TerrainRoadH.html',
+    'terrains/TerrainRoadV.html'
 ];
 
 var unitFiles = [

@@ -99,6 +99,16 @@ Meteor.startup(function () {
                 air: 1
             }
         },
+        riverH: {
+            name: "River Horizontal",
+            templateName: "TerrainRiverH",
+            defence: 0,
+            moveCost: {
+                foot: 2,
+                mech: 1,
+                air: 1
+            }
+        },
         bridge: {
             name: "Bridge",
             templateName: "TerrainBridge",
@@ -110,11 +120,22 @@ Meteor.startup(function () {
                 threads: 1,
                 air: 1
             }
-        }
-        ,
+        },
         roadH: {
             name: "Road Horizontal",
             templateName: "TerrainRoadH",
+            defence: 0,
+            moveCost: {
+                foot: 1,
+                mech: 1,
+                wheels: 1,
+                threads: 1,
+                air: 1
+            }
+        },
+        roadV: {
+            name: "Road Vertical",
+            templateName: "TerrainRoadV",
             defence: 0,
             moveCost: {
                 foot: 1,

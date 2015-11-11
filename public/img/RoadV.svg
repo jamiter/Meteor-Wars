@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
     <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
-    <title>RoadH</title>
+    <title>RoadV</title>
     <desc>Created with Sketch.</desc>
     <defs>
         <rect id="path-1" x="0" y="2" width="34" height="22"></rect>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="RoadH" sketch:type="MSLayerGroup" transform="translate(-2.000000, 0.000000)">
-            <g id="Road" transform="translate(0.000000, 2.000000)">
+        <g id="RoadV" sketch:type="MSLayerGroup" transform="translate(0.000000, -2.000000)">
+            <g id="Road" transform="translate(15.000000, 17.000000) rotate(90.000000) translate(-15.000000, -17.000000) translate(-2.000000, 4.000000)">
                 <g>
                     <use stroke="#B7B6C8" stroke-width="2" fill="#A0A7C1" fill-rule="evenodd" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
                     <use stroke="#A0A7C1" stroke-width="1" fill="none" xlink:href="#path-1"></use>
