@@ -212,7 +212,7 @@ class @Unit extends Model
         threads: 1
         air: 1
 
-    console.log moveCost = defaultTerrain.moveCost[@moveType]
+    moveCost = defaultTerrain.moveCost[@moveType]
 
     for row in grid.nodes
       for node in row
